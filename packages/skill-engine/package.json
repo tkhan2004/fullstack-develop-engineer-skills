@@ -1,0 +1,16 @@
+{
+  "name": "@engineering-skills/skill-engine",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Skill manifest, document parsing, registry and resolution",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@engineering-skills/config": "workspace:*",
+    "@engineering-skills/core": "workspace:*",
+    "yaml": "^2.6.1",
+    "zod": "^3.24.1"
+  }
+}
