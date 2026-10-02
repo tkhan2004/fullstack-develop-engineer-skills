@@ -5,6 +5,7 @@
     { "path": "packages/config" },
     { "path": "packages/skill-engine" },
     { "path": "packages/architecture-engine" },
+    { "path": "packages/detection" },
     { "path": "apps/cli" }
   ]
 }
