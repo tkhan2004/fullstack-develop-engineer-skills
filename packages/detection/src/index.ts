@@ -12,3 +12,12 @@ export {
 export type { Snapshot, SnapshotFile } from "./snapshot.js";
 export { detectStack, readPackage } from "./stack.js";
 export type { PackageInfo, StackDetection } from "./stack.js";
+export {
+  CLASSIFICATION_THRESHOLD,
+  WEIGHTS,
+  detectArchitecture,
+  detectSourceRoot,
+  readAliases,
+  toSrcPath,
+} from "./architecture.js";
+export type { ArchitectureDetection, StyleScore } from "./architecture.js";
