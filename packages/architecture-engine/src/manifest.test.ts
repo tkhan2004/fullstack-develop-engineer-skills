@@ -74,6 +74,14 @@ describe("shipped architectures", () => {
     });
   });
 
+  it("lets a marker offer alternatives (modules/ or features/)", async () => {
+    const result = await loadManifests(architecturesDir);
+    if (!result.ok) throw new Error("invalid");
+    expect(result.value.find((m) => m.name === "feature")?.detection?.marker_directories).toEqual([
+      ["src/modules/*", "src/features/*"],
+    ]);
+  });
+
   it("marks feature-clean as a refinement of feature", async () => {
     const result = await loadManifests(architecturesDir);
     if (!result.ok) throw new Error("invalid");

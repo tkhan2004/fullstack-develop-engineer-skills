@@ -93,7 +93,8 @@ export const manifestSchema = z
 
     detection: z
       .object({
-        marker_directories: z.array(z.string()).default([]),
+        /** Each entry is one marker; an array entry means "any of these" (modules/ or features/). */
+        marker_directories: z.array(z.union([z.string(), z.array(z.string()).min(1)])).default([]),
         marker_files: z.array(z.string()).default([]),
         min_confidence_markers: z.number().int().positive().default(1),
         /** Styles this one specialises (feature-clean refines feature): compatible, not competing. */

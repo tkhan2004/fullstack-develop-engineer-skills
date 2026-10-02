@@ -53,6 +53,7 @@ trade_offs:
     - "The application is a handful of endpoints with one domain"
 
 detection:
-  marker_directories: ["src/modules/*", "src/features/*"]
+  marker_directories:
+    - ["src/modules/*", "src/features/*"]
   marker_files: []
   min_confidence_markers: 1
