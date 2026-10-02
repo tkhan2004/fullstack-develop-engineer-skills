@@ -9,7 +9,14 @@ export { packageName, resolveImport } from "./resolve.js";
 export type { ResolveContext, ResolvedImport } from "./resolve.js";
 export { classify, isModulePublicApi } from "./classify.js";
 export type { Placement } from "./classify.js";
-export { checkDependencies } from "./check.js";
-export type { CheckOptions, Finding, RuleId, SourceFile } from "./check.js";
+export { checkDependencies, evaluateDependencies, measureConformance } from "./check.js";
+export type {
+  CheckOptions,
+  EvaluateOptions,
+  Evaluation,
+  Finding,
+  RuleId,
+  SourceFile,
+} from "./check.js";
 export { applyStructure, planStructure } from "./generate.js";
 export type { ApplyResult, PlanAction, PlanOptions, StructurePlan } from "./generate.js";

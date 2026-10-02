@@ -74,6 +74,15 @@ describe("shipped architectures", () => {
     });
   });
 
+  it("marks feature-clean as a refinement of feature", async () => {
+    const result = await loadManifests(architecturesDir);
+    if (!result.ok) throw new Error("invalid");
+    expect(result.value.find((m) => m.name === "feature-clean")?.detection?.refines).toEqual([
+      "feature",
+    ]);
+    expect(result.value.find((m) => m.name === "clean")?.detection?.refines).toEqual([]);
+  });
+
   it("applies the same rules per module in feature-clean", async () => {
     const result = await loadManifests(architecturesDir);
     if (!result.ok) throw new Error("invalid");

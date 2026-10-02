@@ -1,7 +1,7 @@
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { beforeAll, describe, expect, it } from "vitest";
-import { checkDependencies, type Finding, type SourceFile } from "./check.js";
+import { checkDependencies, measureConformance, type Finding, type SourceFile } from "./check.js";
 import { classify } from "./classify.js";
 import { loadManifests } from "./loader.js";
 import type { ArchitectureManifest } from "./manifest.js";
@@ -219,5 +219,76 @@ describe("determinism", () => {
     const forward = checkDependencies(manifest, files, { strictness: "strict" });
     const reversed = checkDependencies(manifest, [...files].reverse(), { strictness: "strict" });
     expect(reversed).toEqual(forward);
+  });
+});
+
+describe("measureConformance", () => {
+  const manifest = () => manifests["clean"] as ArchitectureManifest;
+
+  it("is 1 when every checked import conforms", () => {
+    const files = repo({
+      "src/application/a.ts": `import { E } from "../domain/e";`,
+      "src/domain/e.ts": `export class E {}`,
+      "src/infrastructure/r.ts": `import { E } from "../domain/e";`,
+    });
+    expect(measureConformance(manifest(), files)).toEqual({
+      checked: 2,
+      violations: 0,
+      conformance: 1,
+    });
+  });
+
+  it("is the share of checked imports that conform", () => {
+    const files = repo({
+      "src/application/a.ts": `import { E } from "../domain/e";`,
+      "src/domain/e.ts": `import { R } from "../infrastructure/r";`,
+      "src/infrastructure/r.ts": `export class R {}`,
+      "src/presentation/c.ts": `import { A } from "../application/a";`,
+    });
+    const result = measureConformance(manifest(), files);
+    expect(result).toMatchObject({ checked: 3, violations: 1 });
+    expect(result.conformance).toBeCloseTo(2 / 3, 10);
+  });
+
+  it("reports no evidence (undefined) when no rule applied, instead of pretending to be perfect", () => {
+    const files = repo({
+      "src/domain/e.ts": `import { x } from "./other";`,
+      "src/domain/other.ts": `export const x = 1;`,
+    });
+    expect(measureConformance(manifest(), files)).toEqual({
+      checked: 0,
+      violations: 0,
+      conformance: undefined,
+    });
+  });
+
+  it("counts framework-governed external imports as checks", () => {
+    const files = repo({
+      "src/domain/e.ts": `import path from "node:path";\nimport express from "express";`,
+    });
+    expect(measureConformance(manifest(), files)).toEqual({
+      checked: 2,
+      violations: 1,
+      conformance: 0.5,
+    });
+  });
+
+  it("counts cross-module imports as checks", () => {
+    const fc = manifests["feature-clean"] as ArchitectureManifest;
+    const files = repo({
+      "src/modules/orders/application/a.ts": `import { U } from "../../users";\nimport { D } from "../../users/domain/d";`,
+      "src/modules/users/index.ts": `export class U {}`,
+      "src/modules/users/domain/d.ts": `export class D {}`,
+    });
+    expect(measureConformance(fc, files)).toEqual({ checked: 2, violations: 1, conformance: 0.5 });
+  });
+
+  it("measures even where reporting is silent (minimal strictness)", () => {
+    const files = repo({
+      "src/domain/e.ts": `import { R } from "../infrastructure/r";`,
+      "src/infrastructure/r.ts": ``,
+    });
+    expect(checkDependencies(manifest(), files, { strictness: "minimal" })).toEqual([]);
+    expect(measureConformance(manifest(), files).violations).toBe(1);
   });
 });

@@ -28,6 +28,17 @@ export interface CheckOptions {
   readonly aliases?: ResolveContext["aliases"];
 }
 
+export interface EvaluateOptions {
+  readonly aliases?: ResolveContext["aliases"];
+  readonly level: Finding["level"];
+}
+
+export interface Evaluation {
+  /** Imports that a rule applied to (cross-layer, cross-module, or framework-governed). */
+  readonly checked: number;
+  readonly findings: readonly Finding[];
+}
+
 const SOURCE_FILE = /\.(?:[cm]?[jt]sx?)$/;
 
 function globToRegExp(pattern: string): RegExp {
@@ -35,20 +46,15 @@ function globToRegExp(pattern: string): RegExp {
 }
 
 /**
- * Check imports against an architecture's dependency rules.
- * `minimal` and `observe` report nothing; `standard` reports warnings; `strict` reports
- * errors (the manifest decides, see its `strictness` block).
+ * Evaluate every import against the manifest's rules, regardless of strictness. Returns the
+ * violations and how many imports a rule applied to, so callers can compute conformance.
  */
-export function checkDependencies(
+export function evaluateDependencies(
   manifest: ArchitectureManifest,
   files: readonly SourceFile[],
-  options: CheckOptions,
-): Finding[] {
-  const policy =
-    options.strictness === "observe" ? undefined : manifest.strictness[options.strictness];
-  if (!policy?.report) return [];
-  const level = policy.block ? "error" : "warning";
-
+  options: EvaluateOptions,
+): Evaluation {
+  const { level } = options;
   const context: ResolveContext = {
     files: new Set(files.map((f) => f.path)),
     ...(options.aliases ? { aliases: options.aliases } : {}),
@@ -60,6 +66,7 @@ export function checkDependencies(
   }));
   const cross = manifest.dependency_rules.cross_module;
 
+  let checked = 0;
   const findings: Finding[] = [];
   for (const file of files) {
     if (!SOURCE_FILE.test(file.path)) continue;
@@ -79,6 +86,7 @@ export function checkDependencies(
       const resolved = resolveImport(file.path, imp.specifier, context);
 
       if (resolved.kind === "external") {
+        if (forbidden.some((f) => f.layer === from.layer)) checked++;
         const rule = forbidden.find(
           (f) => f.layer === from.layer && f.patterns.some((re) => re.test(resolved.pkg)),
         );
@@ -96,6 +104,7 @@ export function checkDependencies(
       const to = classify(resolved.path, manifest);
 
       if (from.module && to.module && from.module !== to.module) {
+        checked++;
         if (
           cross &&
           !cross.allowed &&
@@ -111,6 +120,7 @@ export function checkDependencies(
       }
 
       if (from.layer && to.layer && from.layer !== to.layer) {
+        checked++;
         const allowed = manifest.mayImport[from.layer] ?? [];
         if (!allowed.includes(to.layer)) {
           add(
@@ -123,11 +133,54 @@ export function checkDependencies(
     }
   }
 
-  return findings.sort(
+  findings.sort(
     (a, b) =>
       a.file.localeCompare(b.file) ||
       a.line - b.line ||
       a.specifier.localeCompare(b.specifier) ||
       a.rule.localeCompare(b.rule),
   );
+  return { checked, findings };
+}
+
+/**
+ * Check imports against an architecture's dependency rules.
+ * `minimal` and `observe` report nothing; `standard` reports warnings; `strict` reports
+ * errors (the manifest decides, see its `strictness` block).
+ */
+export function checkDependencies(
+  manifest: ArchitectureManifest,
+  files: readonly SourceFile[],
+  options: CheckOptions,
+): Finding[] {
+  const policy =
+    options.strictness === "observe" ? undefined : manifest.strictness[options.strictness];
+  if (!policy?.report) return [];
+  return [
+    ...evaluateDependencies(manifest, files, {
+      level: policy.block ? "error" : "warning",
+      ...(options.aliases ? { aliases: options.aliases } : {}),
+    }).findings,
+  ];
+}
+
+/** How well does this code follow the manifest's rules? checked = 0 means no evidence either way. */
+export function measureConformance(
+  manifest: ArchitectureManifest,
+  files: readonly SourceFile[],
+  options: Pick<CheckOptions, "aliases"> = {},
+): {
+  readonly checked: number;
+  readonly violations: number;
+  readonly conformance: number | undefined;
+} {
+  const { checked, findings } = evaluateDependencies(manifest, files, {
+    level: "warning",
+    ...options,
+  });
+  return {
+    checked,
+    violations: findings.length,
+    conformance: checked === 0 ? undefined : 1 - findings.length / checked,
+  };
 }

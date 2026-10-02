@@ -83,3 +83,4 @@ detection:
   marker_directories: ["src/modules/*/domain", "src/modules/*/application"]
   marker_files: ["**/*.use-case.ts"]
   min_confidence_markers: 2
+  refines: [feature]

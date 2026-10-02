@@ -96,6 +96,8 @@ export const manifestSchema = z
         marker_directories: z.array(z.string()).default([]),
         marker_files: z.array(z.string()).default([]),
         min_confidence_markers: z.number().int().positive().default(1),
+        /** Styles this one specialises (feature-clean refines feature): compatible, not competing. */
+        refines: z.array(kebab).default([]),
       })
       .strict()
       .optional(),
