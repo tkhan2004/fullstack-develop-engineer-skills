@@ -14,3 +14,11 @@ export { lookup, matchAppliesTo, matchesPatterns } from "./matcher.js";
 export type { PatternValue } from "./matcher.js";
 export { resolveSkills } from "./resolver.js";
 export type { ResolvedSkill, ResolvedSkillSet } from "./resolver.js";
+export {
+  DEFAULT_TOTAL_BUDGET,
+  SIZE_CLASS,
+  TOKEN_LIMITS,
+  budgetWarnings,
+  limitsFor,
+} from "./budget.js";
+export type { SizeClass } from "./budget.js";
