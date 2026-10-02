@@ -10,3 +10,5 @@ export {
   parseLooseJson,
 } from "./snapshot.js";
 export type { Snapshot, SnapshotFile } from "./snapshot.js";
+export { detectStack, readPackage } from "./stack.js";
+export type { PackageInfo, StackDetection } from "./stack.js";
