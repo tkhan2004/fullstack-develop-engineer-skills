@@ -11,3 +11,5 @@ export { classify, isModulePublicApi } from "./classify.js";
 export type { Placement } from "./classify.js";
 export { checkDependencies } from "./check.js";
 export type { CheckOptions, Finding, RuleId, SourceFile } from "./check.js";
+export { applyStructure, planStructure } from "./generate.js";
+export type { ApplyResult, PlanAction, PlanOptions, StructurePlan } from "./generate.js";
