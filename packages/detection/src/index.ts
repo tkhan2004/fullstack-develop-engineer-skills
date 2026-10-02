@@ -21,3 +21,5 @@ export {
   toSrcPath,
 } from "./architecture.js";
 export type { ArchitectureDetection, StyleScore } from "./architecture.js";
+export { CONSISTENCY_THRESHOLD, detectConventions, sample, styleOf } from "./conventions.js";
+export type { Convention, Conventions } from "./conventions.js";
