@@ -1,0 +1,23 @@
+{
+  "name": "@engineering-skills/cli",
+  "version": "0.0.0",
+  "description": "Engineering rule system for AI coding agents",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "eng-skills": "./dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsup"
+  },
+  "devDependencies": {
+    "@engineering-skills/config": "workspace:*",
+    "@engineering-skills/core": "workspace:*"
+  }
+}
