@@ -1,0 +1,159 @@
+version: 1
+generated:
+  at: 1970-01-01T00:00:00.000Z
+  by: "@engineering-skills/cli@test"
+  commit: "0000000"
+  files_scanned: 17
+  duration_ms: 0
+project:
+  mode: existing
+  root: .
+  source_roots:
+    - src
+stack:
+  language:
+    value: typescript
+    confidence: 0.96
+    evidence:
+      - path: tsconfig.json
+        detail: "strict: true"
+        weight: 0.6
+      - path: "**/*.ts"
+        detail: 12/12 source files
+        weight: 0.9
+  backend:
+    runtime:
+      value: node
+      confidence: 0.7
+      evidence:
+        - path: package.json
+          detail: Node package manifest
+          weight: 0.7
+    framework:
+      value: express
+      confidence: 0.94
+      evidence:
+        - path: package.json
+          detail: dependency "express" ^4.19.2
+          weight: 0.85
+        - path: src/app.ts
+          detail: creates an express app
+          weight: 0.6
+  database:
+    engine:
+      value: postgresql
+      confidence: 0.95
+      evidence:
+        - path: prisma/schema.prisma
+          detail: datasource provider "postgresql"
+          weight: 0.95
+    orm:
+      value: prisma
+      confidence: 0.99
+      evidence:
+        - path: package.json
+          detail: dependency "prisma" ^5.20.0
+          weight: 0.8
+        - path: package.json
+          detail: dependency "@prisma/client" ^5.20.0
+          weight: 0.95
+        - path: prisma/schema.prisma
+          detail: Prisma schema
+          weight: 0.9
+  testing:
+    framework:
+      value: vitest
+      confidence: 0.85
+      evidence:
+        - path: package.json
+          detail: dependency "vitest" ^2.1.0
+          weight: 0.85
+architecture:
+  backend:
+    value: custom
+    confidence: 0.62
+    evidence:
+      - path: src
+        detail: closest named style is "layered" at 0.38, below the 0.6 threshold
+        weight: 0.62
+      - path: src
+        detail: "top-level directories: common, controllers, helpers, managers, modules, random, services, utils"
+        weight: 0.3
+    alternatives:
+      - value: layered
+        confidence: 0.38
+      - value: feature
+        confidence: 0.31
+    structure:
+      root: src
+      directories:
+        - path: src/common
+          files: 1
+        - path: src/controllers
+          files: 2
+        - path: src/helpers
+          files: 2
+        - path: src/managers
+          files: 1
+        - path: src/modules
+          files: 2
+        - path: src/random
+          files: 1
+        - path: src/services
+          files: 1
+        - path: src/utils
+          files: 1
+conventions:
+  naming:
+    variables:
+      value: camelCase
+      ratio: 1
+      sample_size: 6
+    classes:
+      value: PascalCase
+      ratio: 1
+      sample_size: 2
+  tests: {}
+  imports:
+    style:
+      value: relative
+      ratio: 1
+      sample_size: 15
+    aliases: []
+  exports:
+    style:
+      value: named
+      ratio: 1
+      sample_size: 13
+  async:
+    style:
+      value: async-await
+      ratio: 0.67
+      sample_size: 3
+reference_modules:
+  - concern: controller
+    path: src/controllers/order.controller.ts
+    reason: conforms to the dependency rules
+  - concern: service
+    path: src/services/order.service.ts
+    reason: conforms to the dependency rules; 12 lines
+observations:
+  - id: orm-outside-data-layer
+    severity: warning
+    count: 2
+    locations:
+      - src/controllers/order.controller.ts:2
+      - src/services/order.service.ts:1
+    detail: Direct ORM or query-builder usage outside the data layer
+maturity:
+  architecture: partial
+  conventions: detected
+  testing: missing
+  security: missing
+  documentation: partial
+  observability: missing
+gaps:
+  - area: security
+    detail: No request validation library detected
+  - area: testing
+    detail: No test files detected

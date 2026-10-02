@@ -1,0 +1,25 @@
+version: 1
+generated:
+  at: 1970-01-01T00:00:00.000Z
+  by: "@engineering-skills/cli@test"
+  commit: "0000000"
+  files_scanned: 1
+  duration_ms: 0
+project:
+  mode: new
+  root: .
+  source_roots: []
+stack: {}
+conventions:
+  naming: {}
+  tests: {}
+reference_modules: []
+observations: []
+maturity:
+  architecture: missing
+  conventions: missing
+  testing: missing
+  security: missing
+  documentation: partial
+  observability: missing
+gaps: []

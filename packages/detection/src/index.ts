@@ -31,3 +31,15 @@ export { assessMaturity } from "./maturity.js";
 export type { Gap, Maturity, MaturityReport } from "./maturity.js";
 export { suggestProjectMode } from "./mode.js";
 export type { ModeSuggestion } from "./mode.js";
+export {
+  DEFAULT_PROFILE_PATH,
+  PROFILE_VERSION,
+  isProfileStale,
+  parseProfile,
+  profileSchema,
+  serializeProfile,
+} from "./profile.js";
+export type { Profile } from "./profile.js";
+export { readGitCommit } from "./git.js";
+export { analyzeRepository, analyzeSnapshot, writeProfile } from "./analyze.js";
+export type { Analysis, AnalyzeOptions } from "./analyze.js";

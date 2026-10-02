@@ -1,0 +1,196 @@
+version: 1
+generated:
+  at: 1970-01-01T00:00:00.000Z
+  by: "@engineering-skills/cli@test"
+  commit: "0000000"
+  files_scanned: 27
+  duration_ms: 0
+project:
+  mode: existing
+  root: .
+  source_roots:
+    - src
+stack:
+  language:
+    value: typescript
+    confidence: 0.96
+    evidence:
+      - path: tsconfig.json
+        detail: "strict: true"
+        weight: 0.6
+      - path: "**/*.ts"
+        detail: 22/22 source files
+        weight: 0.9
+  backend:
+    runtime:
+      value: node
+      confidence: 0.7
+      evidence:
+        - path: package.json
+          detail: Node package manifest
+          weight: 0.7
+    framework:
+      value: express
+      confidence: 0.94
+      evidence:
+        - path: package.json
+          detail: dependency "express" ^4.19.2
+          weight: 0.85
+        - path: src/app.ts
+          detail: creates an express app
+          weight: 0.6
+  database:
+    engine:
+      value: postgresql
+      confidence: 0.95
+      evidence:
+        - path: prisma/schema.prisma
+          detail: datasource provider "postgresql"
+          weight: 0.95
+    orm:
+      value: prisma
+      confidence: 0.99
+      evidence:
+        - path: package.json
+          detail: dependency "prisma" ^5.20.0
+          weight: 0.8
+        - path: package.json
+          detail: dependency "@prisma/client" ^5.20.0
+          weight: 0.95
+        - path: prisma/schema.prisma
+          detail: Prisma schema
+          weight: 0.9
+  testing:
+    framework:
+      value: vitest
+      confidence: 0.85
+      evidence:
+        - path: package.json
+          detail: dependency "vitest" ^2.1.0
+          weight: 0.85
+architecture:
+  backend:
+    value: layered
+    confidence: 0.82
+    evidence:
+      - path: src/controllers
+        detail: 2 files
+        weight: 0.12
+      - path: src/services
+        detail: 5 files
+        weight: 0.12
+      - path: src/repositories
+        detail: 2 files
+        weight: 0.12
+      - path: import-graph
+        detail: 15/22 cross-boundary imports follow the dependency rules
+        weight: 0.3
+      - path: file-names
+        detail: 81% role-naming and marker-file match
+        weight: 0.16
+    conformance: 0.68
+conventions:
+  naming:
+    variables:
+      value: camelCase
+      ratio: 1
+      sample_size: 6
+    files:
+      value: kebab-case
+      ratio: 1
+      sample_size: 3
+    classes:
+      value: PascalCase
+      ratio: 1
+      sample_size: 7
+  tests:
+    placement:
+      value: colocated
+      ratio: 1
+      sample_size: 2
+    naming:
+      value: "*.test.*"
+      ratio: 1
+      sample_size: 2
+  errors:
+    strategy:
+      value: custom-error-class
+      ratio: 1
+      sample_size: 2
+      detail: AppError in src/utils/app-error.ts
+  validation:
+    library:
+      value: zod
+      ratio: 1
+      sample_size: 2
+      detail: used in 2/2 validator/schema files
+  imports:
+    style:
+      value: relative
+      ratio: 1
+      sample_size: 26
+    aliases: []
+  exports:
+    style:
+      value: named
+      ratio: 1
+      sample_size: 21
+  async:
+    style:
+      value: async-await
+      ratio: 1
+      sample_size: 7
+reference_modules:
+  - concern: controller
+    path: src/controllers/order.controller.ts
+    reason: 45 lines
+  - concern: repository
+    path: src/repositories/order.repository.ts
+    reason: conforms to the dependency rules; 15 lines
+  - concern: service
+    path: src/services/order.service.ts
+    reason: has a colocated test; conforms to the dependency rules; 17 lines
+  - concern: test
+    path: src/services/order.service.test.ts
+    reason: uses the project's test runner
+observations:
+  - id: dependency-rule-violations
+    severity: warning
+    count: 6
+    locations:
+      - src/controllers/order.controller.ts:3
+      - src/controllers/order.controller.ts:4
+      - src/controllers/user.controller.ts:2
+      - src/middlewares/auth.middleware.ts:2
+      - src/repositories/user.repository.ts:3
+      - src/services/billing.service.ts:3
+    detail: Imports that cross layers against the layered dependency rules
+  - id: framework-leakage
+    severity: warning
+    count: 1
+    locations:
+      - src/services/billing.service.ts:2
+    detail: Framework or driver imports in a layer that should not know about them
+  - id: logic-in-controller
+    severity: info
+    count: 1
+    locations:
+      - src/controllers/order.controller.ts:17
+    detail: Controllers with 5 or more branching statements (business rules may live in the HTTP layer)
+  - id: orm-outside-data-layer
+    severity: warning
+    count: 2
+    locations:
+      - src/controllers/order.controller.ts:2
+      - src/services/billing.service.ts:1
+    detail: Direct ORM or query-builder usage outside the data layer
+maturity:
+  architecture: detected
+  conventions: detected
+  testing: partial
+  security: partial
+  documentation: partial
+  observability: missing
+gaps:
+  - area: testing
+    detail: No integration or end-to-end tests detected

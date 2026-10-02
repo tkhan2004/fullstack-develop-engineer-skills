@@ -1,0 +1,71 @@
+version: 1
+generated:
+  at: 1970-01-01T00:00:00.000Z
+  by: "@engineering-skills/cli@test"
+  commit: "0000000"
+  files_scanned: 4
+  duration_ms: 0
+project:
+  mode: existing
+  root: .
+  source_roots: []
+stack:
+  language:
+    value: javascript
+    confidence: 0.93
+    evidence:
+      - path: "**/*.js"
+        detail: 2/2 source files
+        weight: 0.9
+      - path: package.json
+        detail: present, no tsconfig.json
+        weight: 0.3
+  backend:
+    runtime:
+      value: node
+      confidence: 0.7
+      evidence:
+        - path: package.json
+          detail: Node package manifest
+          weight: 0.7
+    framework:
+      value: express
+      confidence: 0.94
+      evidence:
+        - path: package.json
+          detail: dependency "express" ^4.19.2
+          weight: 0.85
+        - path: index.js
+          detail: creates an express app
+          weight: 0.6
+  testing:
+    framework:
+      value: jest
+      confidence: 0.85
+      evidence:
+        - path: package.json
+          detail: dependency "jest" ^29.7.0
+          weight: 0.85
+conventions:
+  naming: {}
+  tests: {}
+  imports:
+    style:
+      value: relative
+      ratio: 1
+      sample_size: 1
+    aliases: []
+reference_modules: []
+observations: []
+maturity:
+  architecture: missing
+  conventions: partial
+  testing: missing
+  security: missing
+  documentation: partial
+  observability: missing
+gaps:
+  - area: security
+    detail: No request validation library detected
+  - area: testing
+    detail: No test files detected
