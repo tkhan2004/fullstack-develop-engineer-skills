@@ -157,3 +157,16 @@ The profile never overrides config. When they disagree, `doctor` reports the dri
 | Generators     | Project context block in agent instructions                    |
 | `doctor`       | Baseline for drift and for `observations` → diagnostics        |
 | `migrate`      | Module inventory and ordering input                            |
+
+## 5. Notes from the implementation
+
+- A convention below 65% carries `consistent: false`; the value is still the majority.
+- `architecture.backend.structure` appears only for `value: custom` and lists top-level directories
+  with file counts; `conformance` appears only for a named style.
+- For `value: custom`, `confidence` means "how sure we are that no named style fits"
+  (`1 − confidence of the closest style`, capped at 0.95).
+- `alternatives[].confidence` uses the same formula as the winner, so the numbers are comparable.
+- `generated.truncated: true` marks a scan that stopped at the file limit.
+- `reference_modules` never lists a file that violates the detected architecture's rules.
+- Golden profiles for every fixture live in `tests/fixtures/profiles/`; regenerate deliberately with
+  `UPDATE_GOLDEN=1 pnpm test`.

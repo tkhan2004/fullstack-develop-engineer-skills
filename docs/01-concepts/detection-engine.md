@@ -111,7 +111,7 @@ Co-location patterns, suffix conventions (`*.service.ts`), index barrels, per-mo
 
 ```text
 score(style) = 0.35·vocabulary + 0.45·conformance + 0.20·composition
-confidence   = score(best) · (1 − score(second)/score(best))·0.5 + score(best)·0.5
+confidence   = score(best) − 0.5·score(strongest unrelated competitor)
 ```
 
 The separation term matters: two styles at 0.70 and 0.68 must _not_ yield 0.70 confidence.
@@ -188,3 +188,32 @@ fixtures/repos/
 
 A detector change that moves a fixture across a threshold MUST update the fixture's expected
 snapshot in the same commit. Snapshots are the regression suite for detection.
+
+## 7. Implementation notes (P5)
+
+Decisions made while building and running the detectors; the fixtures and golden profiles encode them.
+
+- **Marker alternatives.** `detection.marker_directories` entries may be a list meaning "any of
+  these" (`["src/modules/*", "src/features/*"]`). A NestJS fixture first scored 0.75 because two
+  names for one concept were counted as two required markers.
+- **Conformance is smoothed** with one pseudo-observation at 0.5 — `(conforming + 0.5)/(checked + 1)` —
+  so two conforming imports are not treated as conclusive. With no rule-governed imports at all the
+  value is 0.5: absence of counter-evidence, not proof.
+- **Only rule-governed imports count**: cross-layer, cross-module, and external imports in layers
+  that have `forbidden_imports`. Test files are excluded.
+- **`custom` confidence** is `1 − confidence(best named)`, capped at 0.95: the framework never claims
+  certainty that a structure is custom. The closest named styles are listed as alternatives, scored
+  with the same formula. `conformance` is recorded only for a style we committed to.
+- **Not project code, never scanned:** `node_modules`, build output, `.git`, and `fixtures`,
+  `__fixtures__`, `testdata`. Found by analysing this repository, which "detected" Prisma from its
+  own fixtures.
+- **Reference modules never include a file with rule violations.** An agent imitates what it is shown;
+  a concern with no safe example has none.
+- **Observations** shipped: `logic-in-controller`, `orm-outside-data-layer`,
+  `dependency-rule-violations`, `module-internals-access`, `framework-leakage`.
+  `domain-logic-in-utils` and validation/authorization checks are deferred (they need type or
+  semantic information a lightweight scanner does not have).
+- **Source roots:** `src`, else `app`/`lib`/`server` with at least three source files. A repository
+  without one abstains (no architecture claim). Monorepos are analysed one package at a time
+  (`--cwd packages/<name>`).
+- **Import extraction is a scanner, not a compiler** (see architecture-engine notes).

@@ -72,11 +72,14 @@ Rules:
 ## 3. `analyze`
 
 ```bash
-eng-skills analyze [--json] [--output <path>] [--deterministic] [--max-files N]
+eng-skills analyze [--json] [--output <path>] [--no-write] [--deterministic] [--max-files N] [--cwd <dir>]
 ```
 
 Read-only except for the profile file. Exit `0` even when the repo looks unhealthy —
 `analyze` reports, `doctor` judges.
+
+`--no-write` analyses and reports without writing the profile; `--output` is relative to the analysed
+directory; invalid arguments exit 2; reaching the file limit warns on stderr.
 
 Human output: the report shape shown in
 [project-mode.md §4](../01-concepts/project-mode.md). `--json` emits the profile for tooling.
