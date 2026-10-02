@@ -1,0 +1,78 @@
+name: layered
+version: 1
+title: Layered Architecture
+description: >
+  Horizontal layers (routes, controllers, services, repositories, models) with a one-way
+  dependency flow from the transport edge down to data access.
+targets: [backend]
+
+layers:
+  - { id: routes, description: "Registers URLs and maps them to controllers" }
+  - { id: controllers, description: "Translates HTTP into service calls; no business rules" }
+  - { id: middlewares, description: "Cross-cutting request handling (auth, logging, errors)" }
+  - { id: validators, description: "Input schemas for the request boundary" }
+  - { id: services, description: "Business logic and orchestration" }
+  - { id: repositories, description: "Data access; the only layer that talks to the ORM or driver" }
+  - { id: models, description: "Data shapes shared across layers" }
+
+dependency_rules:
+  scope: global
+  routes: { may_import: [controllers, middlewares, validators] }
+  controllers: { may_import: [services, validators, models] }
+  middlewares: { may_import: [services, models] }
+  validators: { may_import: [models] }
+  services: { may_import: [repositories, models] }
+  repositories: { may_import: [models] }
+  models: { may_import: [] }
+
+forbidden_imports:
+  services:
+    external: [express, "@nestjs/*", fastify]
+    reason: "Services hold business logic and must not depend on the HTTP framework."
+  repositories:
+    external: [express, "@nestjs/*", fastify]
+    reason: "Repositories own data access and must not know about the transport."
+
+structure:
+  root: src
+  directories:
+    - src/routes
+    - src/controllers
+    - src/middlewares
+    - src/validators
+    - src/services
+    - src/repositories
+    - src/models
+    - src/config
+
+naming:
+  files: kebab-case
+
+strictness:
+  minimal: { enforce_dependency_rules: false, report: false }
+  standard: { enforce_dependency_rules: false, report: true }
+  strict: { enforce_dependency_rules: true, report: true, block: true }
+
+compatible_stacks:
+  backend: [express, nestjs, fastify]
+  database: [postgresql, mysql, sqlite, mongodb]
+
+skills: [architecture/architecture-principles, architecture/layered]
+
+trade_offs:
+  benefits:
+    - "Familiar to almost every backend developer; little onboarding cost"
+    - "Low ceremony: a feature touches a predictable, small set of files"
+    - "Fits CRUD-heavy services with modest business rules"
+  costs:
+    - "Services tend to accumulate unrelated logic and grow into large classes"
+    - "A single feature is spread across every layer, so related code is far apart"
+    - "Nothing prevents business rules leaking into controllers unless boundaries are checked"
+  not_recommended_when:
+    - "The domain has rich, evolving business rules that need isolated testing"
+    - "Several teams work on independent domains in the same codebase"
+
+detection:
+  marker_directories: [src/controllers, src/services, src/repositories]
+  marker_files: []
+  min_confidence_markers: 2

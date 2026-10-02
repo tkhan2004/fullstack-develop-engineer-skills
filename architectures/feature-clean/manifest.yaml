@@ -1,0 +1,85 @@
+name: feature-clean
+version: 1
+title: Feature + Clean Architecture
+description: >
+  Clean Architecture boundaries applied inside each feature module. Modules are isolated from
+  each other; within a module the dependency rule points inward.
+targets: [backend]
+
+layers:
+  - { id: domain, description: "Entities, value objects, repository contracts, domain errors" }
+  - { id: application, description: "Use cases and DTOs" }
+  - { id: infrastructure, description: "Repository implementations and external adapters" }
+  - { id: presentation, description: "HTTP controllers and request validation" }
+
+dependency_rules:
+  scope: module
+  cross_module:
+    allowed: false
+    via: [shared, module-public-api]
+  domain: { may_import: [] }
+  application: { may_import: [domain] }
+  presentation: { may_import: [application] }
+  infrastructure: { may_import: [application, domain] }
+
+forbidden_imports:
+  domain:
+    external: [express, "@nestjs/*", "@prisma/client", pg, http]
+    reason: "The domain layer must remain framework-agnostic and independently testable."
+  application:
+    external: [express, "@nestjs/*", "@prisma/client"]
+    reason: "Use cases depend on contracts, not on infrastructure."
+
+structure:
+  root: src
+  directories:
+    - src/modules
+    - src/shared
+    - src/config
+  module:
+    container: src/modules
+    directories:
+      - domain
+      - domain/entities
+      - domain/repositories
+      - application
+      - application/use-cases
+      - application/dto
+      - infrastructure
+      - infrastructure/repositories
+      - presentation
+
+naming:
+  module: kebab-case
+  files: kebab-case
+  use_case_suffix: ".use-case.ts"
+  entity_suffix: ".entity.ts"
+
+strictness:
+  minimal: { enforce_dependency_rules: false, report: false }
+  standard: { enforce_dependency_rules: false, report: true }
+  strict: { enforce_dependency_rules: true, report: true, block: true }
+
+compatible_stacks:
+  backend: [express, nestjs, fastify]
+  database: [postgresql, mysql, sqlite, mongodb]
+
+skills: [architecture/architecture-principles, architecture/feature-clean]
+
+trade_offs:
+  benefits:
+    - "Business rules are isolated from frameworks and from other modules"
+    - "High unit-testability of each module's domain"
+    - "Modules can be extracted into separate services later"
+  costs:
+    - "Highest file count of the supported styles"
+    - "Boilerplate per use case"
+    - "Modules can drift in style without review discipline"
+  not_recommended_when:
+    - "Small CRUD service with few business rules"
+    - "Prototype with a short expected lifetime"
+
+detection:
+  marker_directories: ["src/modules/*/domain", "src/modules/*/application"]
+  marker_files: ["**/*.use-case.ts"]
+  min_confidence_markers: 2

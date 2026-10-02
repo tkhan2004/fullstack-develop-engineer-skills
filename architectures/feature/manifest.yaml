@@ -1,0 +1,58 @@
+name: feature
+version: 1
+title: Feature-Based Architecture
+description: >
+  Code is grouped by business capability (users, orders, auth). Each module owns its
+  controller, service and repository, and exposes a small public surface.
+targets: [backend, frontend]
+
+layers: []
+
+dependency_rules:
+  scope: module
+  cross_module:
+    allowed: false
+    via: [shared, module-public-api]
+
+structure:
+  root: src
+  directories:
+    - src/modules
+    - src/shared
+    - src/infrastructure
+    - src/config
+  module:
+    container: src/modules
+    directories: []
+
+naming:
+  module: kebab-case
+  files: kebab-case
+
+strictness:
+  minimal: { enforce_dependency_rules: false, report: false }
+  standard: { enforce_dependency_rules: false, report: true }
+  strict: { enforce_dependency_rules: true, report: true, block: true }
+
+compatible_stacks:
+  backend: [express, nestjs, fastify]
+  database: [postgresql, mysql, sqlite, mongodb]
+
+skills: [architecture/architecture-principles, architecture/feature]
+
+trade_offs:
+  benefits:
+    - "Related code lives together, so a change to one capability touches one directory"
+    - "Modules can be owned by different people or teams with little overlap"
+    - "A module with a clear public surface can later be extracted"
+  costs:
+    - "Where shared code belongs becomes a recurring argument, and shared/ tends to decay"
+    - "Flows that span capabilities need an explicit convention"
+    - "Inside a module there is no enforced layering, so discipline varies between modules"
+  not_recommended_when:
+    - "The application is a handful of endpoints with one domain"
+
+detection:
+  marker_directories: ["src/modules/*", "src/features/*"]
+  marker_files: []
+  min_confidence_markers: 1

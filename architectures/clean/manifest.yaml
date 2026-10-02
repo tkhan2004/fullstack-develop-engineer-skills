@@ -1,0 +1,84 @@
+name: clean
+version: 1
+title: Clean Architecture
+description: >
+  Concentric layers where source dependencies point inward. The domain knows nothing about
+  frameworks, databases or HTTP; infrastructure implements contracts declared by inner layers.
+targets: [backend]
+
+layers:
+  - { id: domain, description: "Entities, value objects, repository contracts, domain errors" }
+  - { id: application, description: "Use cases, DTOs and orchestration" }
+  - {
+      id: infrastructure,
+      description: "Repository implementations, external services, persistence",
+    }
+  - { id: presentation, description: "HTTP controllers, routes, middleware, validators" }
+
+dependency_rules:
+  scope: global
+  domain: { may_import: [] }
+  application: { may_import: [domain] }
+  presentation: { may_import: [application] }
+  infrastructure: { may_import: [application, domain] }
+
+forbidden_imports:
+  domain:
+    external: [express, "@nestjs/*", "@prisma/client", pg, http]
+    reason: "The domain layer must remain framework-agnostic and independently testable."
+  application:
+    external: [express, "@nestjs/*", "@prisma/client"]
+    reason: "Use cases depend on contracts, not on infrastructure."
+
+structure:
+  root: src
+  directories:
+    - src/domain
+    - src/domain/entities
+    - src/domain/value-objects
+    - src/domain/repositories
+    - src/domain/errors
+    - src/application
+    - src/application/use-cases
+    - src/application/dto
+    - src/infrastructure
+    - src/infrastructure/database
+    - src/infrastructure/repositories
+    - src/infrastructure/external-services
+    - src/presentation
+    - src/presentation/http
+    - src/config
+
+naming:
+  files: kebab-case
+  use_case_suffix: ".use-case.ts"
+  entity_suffix: ".entity.ts"
+
+strictness:
+  minimal: { enforce_dependency_rules: false, report: false }
+  standard: { enforce_dependency_rules: false, report: true }
+  strict: { enforce_dependency_rules: true, report: true, block: true }
+
+compatible_stacks:
+  backend: [express, nestjs, fastify]
+  database: [postgresql, mysql, sqlite, mongodb]
+
+skills: [architecture/architecture-principles, architecture/clean]
+
+trade_offs:
+  benefits:
+    - "Business rules can be tested without a framework, a database or HTTP"
+    - "Frameworks and databases become replaceable details at the edge"
+    - "The dependency direction is explicit and can be checked mechanically"
+  costs:
+    - "More files and indirection per use case"
+    - "Mapping between layers adds boilerplate"
+    - "Easy to over-abstract when the domain is thin"
+  not_recommended_when:
+    - "The service is mostly CRUD with few business rules"
+    - "The application is a prototype with a short expected lifetime"
+
+detection:
+  marker_directories: [src/domain, src/application, src/infrastructure, src/presentation]
+  marker_files: ["**/*.use-case.ts"]
+  min_confidence_markers: 2
