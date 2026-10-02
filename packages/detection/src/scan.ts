@@ -17,6 +17,10 @@ export const ALWAYS_SKIPPED_DIRECTORIES: ReadonlySet<string> = new Set([
   ".svelte-kit",
   ".output",
   ".vercel",
+  // Test data is not the project's own code: it would be detected as if it were.
+  "fixtures",
+  "__fixtures__",
+  "testdata",
 ]);
 
 const TEXT_EXTENSIONS = new Set([
