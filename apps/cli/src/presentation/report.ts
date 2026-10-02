@@ -41,7 +41,10 @@ export function renderReport(profile: Profile, options: ReportOptions): string {
   const arch = profile.architecture?.backend;
   lines.push(paint(1, "Architecture"));
   if (!arch) {
-    lines.push(`  ${dim("no source root found")}`);
+    lines.push(`  ${dim("no source root found (looked for src/, then app/, lib/ and server/)")}`);
+    lines.push(
+      `  ${dim("monorepo? analyse one package: eng-skills analyze --cwd packages/<name>")}`,
+    );
   } else if (arch.value === "custom") {
     lines.push(
       `  ${warn(`${displayName(arch.value)}  ${dim(`confidence ${pct(arch.confidence)}`)}`)}`,

@@ -122,6 +122,12 @@ describe("eng-skills analyze", () => {
     expect(out).toContain("closest: Layered");
   });
 
+  it("tells the user how to analyse a monorepo when there is no source root", async () => {
+    const { out } = await run(["analyze", "--no-write", "--cwd", fixture("js-no-types")]);
+    expect(out).toContain("no source root found");
+    expect(out).toContain("--cwd packages/<name>");
+  });
+
   it("shows neutral observations for the repository with violations", async () => {
     const { out } = await run([
       "analyze",
