@@ -1,6 +1,8 @@
 import { main } from "./main.js";
 
-process.exitCode = main(process.argv.slice(2), {
+process.exitCode = await main(process.argv.slice(2), {
   out: (text) => process.stdout.write(text),
   err: (text) => process.stderr.write(text),
+  cwd: process.cwd(),
+  color: Boolean(process.stdout.isTTY) && !process.env["NO_COLOR"],
 });

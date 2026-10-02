@@ -7,5 +7,18 @@
     "types": ["node"]
   },
   "include": ["src"],
-  "references": [{ "path": "../../packages/core" }, { "path": "../../packages/config" }]
+  "references": [
+    {
+      "path": "../../packages/core"
+    },
+    {
+      "path": "../../packages/config"
+    },
+    {
+      "path": "../../packages/architecture-engine"
+    },
+    {
+      "path": "../../packages/detection"
+    }
+  ]
 }

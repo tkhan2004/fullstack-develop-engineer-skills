@@ -1,3 +1,4 @@
+import { cpSync } from "node:fs";
 import { defineConfig } from "tsup";
 
 export default defineConfig({
@@ -6,7 +7,15 @@ export default defineConfig({
   target: "node20",
   platform: "node",
   clean: true,
-  banner: { js: "#!/usr/bin/env node" },
+  // Bundled CommonJS dependencies (yaml) call require(); give the ESM bundle one.
+  banner: {
+    js: '#!/usr/bin/env node\nimport { createRequire as __createRequire } from "node:module";\nconst require = __createRequire(import.meta.url);',
+  },
   // Single self-contained file so `npx @engineering-skills/cli` needs no workspace packages.
   noExternal: [/.*/],
+  // Framework data (architectures, presets) ships next to the bundle.
+  onSuccess: async () => {
+    for (const dir of ["architectures", "presets"])
+      cpSync(`../../${dir}`, `dist/data/${dir}`, { recursive: true });
+  },
 });

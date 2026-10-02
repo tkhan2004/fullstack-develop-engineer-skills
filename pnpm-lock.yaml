@@ -41,12 +41,18 @@ importers:
 
   apps/cli:
     devDependencies:
+      '@engineering-skills/architecture-engine':
+        specifier: workspace:*
+        version: link:../../packages/architecture-engine
       '@engineering-skills/config':
         specifier: workspace:*
         version: link:../../packages/config
       '@engineering-skills/core':
         specifier: workspace:*
         version: link:../../packages/core
+      '@engineering-skills/detection':
+        specifier: workspace:*
+        version: link:../../packages/detection
 
   packages/architecture-engine:
     dependencies:

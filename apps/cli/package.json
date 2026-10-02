@@ -17,7 +17,9 @@
     "build": "tsup"
   },
   "devDependencies": {
+    "@engineering-skills/architecture-engine": "workspace:*",
     "@engineering-skills/config": "workspace:*",
-    "@engineering-skills/core": "workspace:*"
+    "@engineering-skills/core": "workspace:*",
+    "@engineering-skills/detection": "workspace:*"
   }
 }

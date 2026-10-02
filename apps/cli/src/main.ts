@@ -1,32 +1,44 @@
-export interface Io {
-  readonly out: (text: string) => void;
-  readonly err: (text: string) => void;
-}
+import { runAnalyze } from "./commands/analyze.js";
+import { VERSION, type Context } from "./context.js";
 
-export const VERSION = "0.0.0";
+export { VERSION };
+export type { Context };
 
 const USAGE = `eng-skills ${VERSION}
 
 Usage: eng-skills <command> [options]
 
-Commands are added phase by phase (see docs/03-plan/roadmap.md).
+Commands:
+  analyze    Analyse an existing repository (read-only) and write its project profile
+
+More commands arrive phase by phase (see docs/03-plan/roadmap.md).
 
 Options:
   -h, --help       Show this help
   -v, --version    Show the version
 `;
 
+const COMMANDS: Readonly<
+  Record<string, (argv: readonly string[], ctx: Context) => Promise<number>>
+> = {
+  analyze: runAnalyze,
+};
+
 /** Entry point with injected I/O so behaviour is testable without spawning a process. */
-export function main(argv: readonly string[], io: Io): number {
-  const [first] = argv;
+export async function main(argv: readonly string[], ctx: Context): Promise<number> {
+  const [first, ...rest] = argv;
   if (first === "-v" || first === "--version") {
-    io.out(`${VERSION}\n`);
+    ctx.out(`${VERSION}\n`);
     return 0;
   }
   if (first === undefined || first === "-h" || first === "--help") {
-    io.out(USAGE);
+    ctx.out(USAGE);
     return 0;
   }
-  io.err(`Unknown command "${first}". Run \`eng-skills --help\`.\n`);
-  return 2;
+  const command = COMMANDS[first];
+  if (!command) {
+    ctx.err(`Unknown command "${first}". Run \`eng-skills --help\`.\n`);
+    return 2;
+  }
+  return command(rest, ctx);
 }
