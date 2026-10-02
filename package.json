@@ -18,7 +18,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "check:deps": "depcruise packages apps --config .dependency-cruiser.cjs",
-    "clean": "pnpm -r exec rm -rf dist && rm -rf coverage"
+    "clean": "pnpm -r exec rm -rf dist && rm -rf coverage",
+    "smoke": "node apps/cli/dist/cli.js analyze --no-write --deterministic --cwd tests/fixtures/repos/clean-strict"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
