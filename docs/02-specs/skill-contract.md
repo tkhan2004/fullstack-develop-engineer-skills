@@ -69,7 +69,7 @@ Concrete triggers. "When writing or reviewing a function", not "always".
 
 ## Architecture Awareness
 
-Required for any skill that touches structure. Use the standard block (§4).
+Required for category `architecture` and for any skill with `touches_structure: true`. Use the standard block (§4); CI checks that its key sentence is present.
 
 ## Core Principles
 
@@ -99,6 +99,11 @@ The questions a reviewer asks. Drives `eng-skills review`.
 
 Which skills this defers to, extends, or overlaps with — and who wins.
 ```
+
+A skill that should only ever be pulled in by another skill (for example `backend/nodejs`)
+uses an `applies_to` that names its natural trigger (`stack.backend.runtime: [node]`) and is
+also listed in `requires` by the skills that depend on it. Provenance then records the first
+reason it was selected.
 
 ## 4. Standard Architecture Awareness block
 
