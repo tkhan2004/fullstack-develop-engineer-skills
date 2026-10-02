@@ -1,0 +1,10 @@
+# Local copies of copyrighted material — never commit.
+raw/**
+!raw/.gitkeep
+!raw/README.md
+
+*.pdf
+*.epub
+*.mobi
+*.azw3
+*.djvu
