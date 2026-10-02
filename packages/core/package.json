@@ -1,0 +1,10 @@
+{
+  "name": "@engineering-skills/core",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Shared vocabulary and result types. Depends on nothing.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  }
+}
