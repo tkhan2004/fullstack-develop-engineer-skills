@@ -100,7 +100,7 @@ describe("reference modules", () => {
     expect(service?.reason).toContain("has a colocated test");
   });
 
-  it("prefers a file without rule violations when one exists, and still answers when none does", async () => {
+  it("never offers a file that violates the rules, even if that leaves a concern without an example", async () => {
     const { snapshot, architecture } = await analyse("express-layered-violations");
     const violating = new Set(architecture?.findings.map((f) => f.file));
     const refs = Object.fromEntries(
@@ -110,9 +110,9 @@ describe("reference modules", () => {
     // billing.service.ts and user.repository.ts violate the rules; cleaner siblings exist.
     expect(violating.has(refs["service"]?.path as string)).toBe(false);
     expect(violating.has(refs["repository"]?.path as string)).toBe(false);
-    // Both controllers violate, so there is no clean example; a reference is still offered.
-    expect(refs["controller"]?.path).toMatch(/^src\/controllers\//);
-    expect(refs["controller"]?.reason).not.toContain("conforms to the dependency rules");
+    // Both controllers violate, so there is no safe example to imitate.
+    expect(refs["controller"]).toBeUndefined();
+    for (const ref of Object.values(refs)) expect(violating.has(ref.path)).toBe(false);
   });
 
   it("is deterministic and offers nothing for an empty repository", async () => {

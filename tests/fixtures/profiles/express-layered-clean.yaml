@@ -143,13 +143,13 @@ conventions:
 reference_modules:
   - concern: controller
     path: src/controllers/order.controller.ts
-    reason: conforms to the dependency rules; 15 lines
+    reason: 15 lines
   - concern: repository
     path: src/repositories/order.repository.ts
-    reason: conforms to the dependency rules; 15 lines
+    reason: 15 lines
   - concern: service
     path: src/services/order.service.ts
-    reason: has a colocated test; conforms to the dependency rules; 17 lines
+    reason: has a colocated test; 17 lines
   - concern: test
     path: src/services/order.service.test.ts
     reason: uses the project's test runner

@@ -123,13 +123,13 @@ conventions:
 reference_modules:
   - concern: controller
     path: src/modules/auth/auth.controller.ts
-    reason: conforms to the dependency rules; 15 lines
+    reason: 15 lines
   - concern: repository
     path: src/modules/auth/auth.repository.ts
-    reason: conforms to the dependency rules; 12 lines
+    reason: 12 lines
   - concern: service
     path: src/modules/auth/auth.service.ts
-    reason: has a colocated test; conforms to the dependency rules; 13 lines
+    reason: has a colocated test; 13 lines
   - concern: test
     path: src/modules/auth/auth.service.spec.ts
     reason: uses the project's test runner

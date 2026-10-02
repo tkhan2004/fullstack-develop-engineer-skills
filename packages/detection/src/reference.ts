@@ -21,8 +21,11 @@ const testSibling = (path: string, tests: readonly SnapshotFile[]) =>
   tests.some((t) => stemOf(t.path).replace(/\.(?:test|spec)$/, "") === stemOf(path));
 
 /**
- * Pick, per concern, the in-repo file an agent should imitate: tested, rule-conforming,
- * reasonably sized and not tangled. Deterministic: ties break by path.
+ * Pick, per concern, the in-repo file an agent should imitate: tested, reasonably sized and
+ * not tangled. Deterministic: ties break by path.
+ *
+ * A file with architecture-rule findings is never offered: an agent imitates what it is shown,
+ * so no example is better than a bad one.
  *
  * @param violating real paths of files with architecture-rule findings
  */
@@ -40,17 +43,13 @@ export function selectReferenceModules(
 
   for (const { concern, role } of CONCERNS) {
     const ranked = sources
-      .filter((f) => role.test(f.path))
+      .filter((f) => role.test(f.path) && !violating.has(f.path))
       .map((file) => {
         const facts: string[] = [];
         let score = 0;
         if (testSibling(file.path, tests)) {
           score += 2;
           facts.push("has a colocated test");
-        }
-        if (!violating.has(file.path)) {
-          score += 1;
-          facts.push("conforms to the dependency rules");
         }
         const lines = lineCount(file);
         if (lines >= 10 && lines <= 250) {

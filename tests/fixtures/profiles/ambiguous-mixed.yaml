@@ -133,10 +133,10 @@ conventions:
 reference_modules:
   - concern: controller
     path: src/controllers/order.controller.ts
-    reason: conforms to the dependency rules
+    reason: only candidate
   - concern: service
     path: src/services/order.service.ts
-    reason: conforms to the dependency rules; 12 lines
+    reason: 12 lines
 observations:
   - id: orm-outside-data-layer
     severity: warning

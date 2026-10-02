@@ -137,16 +137,16 @@ conventions:
 reference_modules:
   - concern: controller
     path: src/modules/orders/presentation/order.controller.ts
-    reason: conforms to the dependency rules
+    reason: only candidate
   - concern: repository
     path: src/modules/orders/infrastructure/repositories/prisma-order.repository.ts
-    reason: conforms to the dependency rules; 12 lines
+    reason: 12 lines
   - concern: test
     path: src/modules/orders/application/use-cases/list-orders.use-case.test.ts
     reason: uses the project's test runner; 10 lines
   - concern: use-case
     path: src/modules/orders/application/use-cases/list-orders.use-case.ts
-    reason: has a colocated test; conforms to the dependency rules; 11 lines
+    reason: has a colocated test; 11 lines
 observations: []
 maturity:
   architecture: detected
