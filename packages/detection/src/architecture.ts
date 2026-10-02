@@ -1,7 +1,9 @@
 import {
   classify,
+  evaluateDependencies,
   measureConformance,
   type ArchitectureManifest,
+  type Finding,
   type SourceFile,
 } from "@engineering-skills/architecture-engine";
 import { round2, type Evidence } from "./claims.js";
@@ -42,6 +44,8 @@ export interface ArchitectureDetection {
   /** Best named candidate, even when below the threshold. */
   readonly best: StyleScore | undefined;
   readonly scores: readonly StyleScore[];
+  /** Rule violations of the best named style, with real (un-remapped) file paths. */
+  readonly findings: readonly Finding[];
   /** Top-level directories under the source root, for describing a custom structure. */
   readonly topLevel: readonly { readonly path: string; readonly files: number }[];
 }
@@ -57,6 +61,10 @@ export function detectSourceRoot(snapshot: Snapshot): string | undefined {
 /** Manifests describe paths under `src/`; remap another root onto it. */
 export const toSrcPath = (path: string, root: string) =>
   root === "src" ? path : `src/${path.slice(root.length + 1)}`;
+
+/** Inverse of {@link toSrcPath}. */
+export const fromSrcPath = (path: string, root: string) =>
+  root === "src" ? path : `${root}/${path.slice("src/".length)}`;
 
 /** tsconfig `paths` as prefix → directory aliases, remapped like source paths. */
 export function readAliases(snapshot: Snapshot, root: string): Record<string, string> {
@@ -236,6 +244,12 @@ export function detectArchitecture(
     return Math.max(0, candidate.score - 0.5 * (rival?.score ?? 0));
   };
   const bestConfidence = best ? confidenceOf(best) : 0;
+  const bestManifest = best ? byName.get(best.style) : undefined;
+  const findings = bestManifest
+    ? evaluateDependencies(bestManifest, sources, { level: "warning", aliases }).findings.map(
+        (f) => ({ ...f, file: fromSrcPath(f.file, sourceRoot) }),
+      )
+    : [];
   const alternatives = scores
     .slice(1)
     .map((s) => ({ value: s.style, confidence: round2(confidenceOf(s)) }));
@@ -272,6 +286,7 @@ export function detectArchitecture(
       conformance: best.conformance,
       best,
       scores,
+      findings,
       topLevel,
     };
   }
@@ -301,6 +316,7 @@ export function detectArchitecture(
     conformance: best?.conformance,
     best,
     scores,
+    findings,
     topLevel,
   };
 }

@@ -23,3 +23,11 @@ export {
 export type { ArchitectureDetection, StyleScore } from "./architecture.js";
 export { CONSISTENCY_THRESHOLD, detectConventions, sample, styleOf } from "./conventions.js";
 export type { Convention, Conventions } from "./conventions.js";
+export { selectReferenceModules } from "./reference.js";
+export type { ReferenceModule } from "./reference.js";
+export { BRANCHING_THRESHOLD, MAX_LOCATIONS, detectObservations } from "./observations.js";
+export type { Observation } from "./observations.js";
+export { assessMaturity } from "./maturity.js";
+export type { Gap, Maturity, MaturityReport } from "./maturity.js";
+export { suggestProjectMode } from "./mode.js";
+export type { ModeSuggestion } from "./mode.js";
