@@ -7,3 +7,7 @@ export { extractImports } from "./imports.js";
 export type { ImportRef } from "./imports.js";
 export { packageName, resolveImport } from "./resolve.js";
 export type { ResolveContext, ResolvedImport } from "./resolve.js";
+export { classify, isModulePublicApi } from "./classify.js";
+export type { Placement } from "./classify.js";
+export { checkDependencies } from "./check.js";
+export type { CheckOptions, Finding, RuleId, SourceFile } from "./check.js";
