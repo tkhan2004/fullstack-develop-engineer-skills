@@ -118,7 +118,14 @@ detection: # hints for the detection engine
 - `forbidden_imports.external` supports glob patterns against package names.
 - The checker MUST report the offending file, the import, the rule, and a suggested fix.
 
-## 4. Tree templates
+## 4. Structure generation
+
+**V1 behaviour:** the generator creates the directories listed in `structure` (plus one
+`structure.module.directories` set per requested module), with `.gitkeep` in empty leaf
+directories. It does not emit source files. `tree/` file templates described below are
+reserved for a style that genuinely needs them; until then they are not implemented.
+
+Reserved design for file templates:
 
 - `tree/` mirrors the generated structure literally.
 - `tree/_module/` is instantiated once per module for module-oriented styles.
@@ -126,7 +133,8 @@ detection: # hints for the detection engine
 - `.gitkeep` is emitted for otherwise-empty directories.
 - Generation MUST be non-destructive: existing files are never overwritten; collisions are
   reported and skipped.
-- Generation is skipped entirely when `project.mode = existing`.
+- Generation is refused when `project.mode = existing`, with a pointer to `eng-skills migrate`.
+- Manifest paths that are absolute or escape the project root are rejected.
 
 ## 5. The `custom` manifest
 
@@ -176,6 +184,6 @@ No core code changes required:
 4. Add detection markers.
 5. Add a fixture repo in `tests/fixtures/repos/`.
 6. Add `dependency-rules.test.ts` and `generator.test.ts`.
-7. Register in `architectures/index.yaml`.
+7. Done — architectures are discovered by directory; there is no registry file to edit.
 
-If step 1–7 required editing the engine, the engine is not data-driven — fix the engine.
+If steps 1–6 required editing the engine, the engine is not data-driven — fix the engine.
