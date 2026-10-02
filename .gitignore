@@ -1,0 +1,16 @@
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+.turbo/
+.DS_Store
+.env
+.env.*
+!.env.example
+*.log
+
+# Local copies of copyrighted reference material — never commit
+docs/sot/raw/**
+!docs/sot/raw/.gitkeep
+!docs/sot/raw/README.md
+dist-types/
