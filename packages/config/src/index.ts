@@ -1,0 +1,8 @@
+export { configSchema, customArchitectureSchema } from "./schema.js";
+export type { EngineeringConfig, EngineeringConfigInput } from "./schema.js";
+export type { ConfigIssue, IssueLevel } from "./issue.js";
+export { parseConfig, parseConfigText } from "./parse.js";
+export type { ConfigResult, ParsedConfig } from "./parse.js";
+export { formatIssues } from "./format.js";
+export { lintConfig } from "./lint.js";
+export { suggest } from "./suggest.js";
