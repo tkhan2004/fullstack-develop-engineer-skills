@@ -1,0 +1,9 @@
+# Backend-only Node API.
+stack:
+  language: typescript
+  package_manager: pnpm
+  backend: { runtime: node, framework: express }
+  database: { engine: postgresql, orm: prisma }
+  testing: { framework: vitest }
+architecture:
+  backend: { style: layered, source: selected, strictness: standard }

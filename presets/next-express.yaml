@@ -1,0 +1,10 @@
+# Next.js frontend + Express API.
+stack:
+  language: typescript
+  package_manager: pnpm
+  backend: { runtime: node, framework: express }
+  frontend: { framework: nextjs }
+  database: { engine: postgresql, orm: prisma }
+  testing: { framework: vitest }
+architecture:
+  backend: { style: feature-clean, source: selected, strictness: standard }

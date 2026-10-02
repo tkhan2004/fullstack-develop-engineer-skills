@@ -6,5 +6,8 @@ export type { ConfigResult, ParsedConfig } from "./parse.js";
 export { serializeConfig } from "./serialize.js";
 export { formatIssues } from "./format.js";
 export { lintConfig } from "./lint.js";
+export { mergeLayers, resolveLayers, defaultStrictness } from "./layers.js";
+export type { ConfigLayers, Layer } from "./layers.js";
+export { listPresets, loadPreset } from "./presets.js";
 export { DEFAULT_CONFIG_PATH, loadConfigFile, writeConfigFile } from "./io.js";
 export { suggest } from "./suggest.js";

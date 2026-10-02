@@ -1,0 +1,10 @@
+# PostgreSQL + Express + React + Node. A preset is only a predefined configuration.
+stack:
+  language: typescript
+  package_manager: pnpm
+  backend: { runtime: node, framework: express }
+  frontend: { framework: react }
+  database: { engine: postgresql, orm: prisma }
+  testing: { framework: vitest }
+architecture:
+  backend: { style: layered, source: selected, strictness: standard }
