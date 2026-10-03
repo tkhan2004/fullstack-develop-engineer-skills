@@ -2,7 +2,7 @@
 
 **Entry** P9 · **Exit** [V1 definition of done](../03-plan/v1-scope.md) fully satisfied.
 
-## Skill library (26 skills)
+## Skill library (28 skills)
 
 Each item: write → validate against the contract → test against a real task → review.
 Use [skill-authoring-checklist.md](skill-authoring-checklist.md) per skill.
@@ -31,6 +31,8 @@ Use [skill-authoring-checklist.md](skill-authoring-checklist.md) per skill.
 ### frontend
 
 - [ ] `react` · [ ] `nextjs`
+- [ ] `accessibility` — every rule traced to a WCAG 2.2 success criterion; re-read each criterion first
+- [ ] `ui-review` — failable pre-flight checklist; defers to the project's existing design system
 
 ### database
 

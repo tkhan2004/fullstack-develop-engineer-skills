@@ -124,12 +124,11 @@ skill; the table is a work list, not a source.
 
 ## 7. Open questions
 
-- Should `frontend/accessibility` and `frontend/ui-review` join the V1 skill set? (Proposed; V1
-  currently lists only `frontend/react` and `frontend/nextjs`.)
+- ~~Should `frontend/accessibility` and `frontend/ui-review` join the V1 skill set?~~ Decided yes (2026-10-03): added to V1 scope.
 - Should Core Web Vitals thresholds be pinned to a version of the standard? They have changed
   before (FID was replaced by INP).
 
 ## 8. Applied in
 
-Nothing yet. Proposed: `frontend/accessibility`, `frontend/ui-review`, and the review checklists of
+Nothing yet. Planned for P10: `frontend/accessibility`, `frontend/ui-review`, and the review checklists of
 `frontend/react` and `frontend/nextjs`.

@@ -29,12 +29,12 @@ core/        engineering-principles · project-onboarding · requirements-analys
 architecture/architecture-principles · layered · feature · clean · feature-clean · custom
 quality/     clean-code · solid · code-review · refactoring
 backend/     typescript · nodejs · express
-frontend/    react · nextjs
+frontend/    react · nextjs · accessibility · ui-review
 database/    sql · postgresql · prisma
 engineering/ testing · security · error-handling · debugging
 ```
 
-26 skills. Each must meet the [skill contract](../02-specs/skill-contract.md) — depth over
+28 skills. Each must meet the [skill contract](../02-specs/skill-contract.md) — depth over
 count; a shallow skill is worse than a missing one.
 
 ### CLI

@@ -42,7 +42,7 @@ skills/
 │   ├── typescript/  nodejs/  express/  nestjs/
 │
 ├── frontend/
-│   ├── react/  nextjs/
+│   ├── react/  nextjs/  accessibility/  ui-review/
 │
 ├── database/
 │   ├── sql/  postgresql/  prisma/  database-performance/

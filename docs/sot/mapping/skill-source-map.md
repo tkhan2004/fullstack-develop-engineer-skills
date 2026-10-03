@@ -25,8 +25,8 @@ here, and that every row names at least one note.
 | `backend/express`                      | Express docs + production best practices; RFC 9457                                           | `notes/express-rules.md`                                     |   ⬜   |
 | `frontend/react`                       | react.dev; TanStack Query docs; Kent C. Dodds                                                | `notes/react-state.md`                                       |   ⬜   |
 | `frontend/nextjs`                      | Next.js App Router docs (caching, server actions)                                            | `notes/nextjs-rendering.md`                                  |   ⬜   |
-| `frontend/accessibility` _(proposed)_  | WCAG 2.2; WAI-ARIA Authoring Practices; MDN                                                  | `notes/frontend-community-references.md`                     |   ⬜   |
-| `frontend/ui-review` _(proposed)_      | WCAG 2.2; Core Web Vitals; NN/g heuristics; community checklists as inspiration only         | `notes/frontend-community-references.md`                     |   ⬜   |
+| `frontend/accessibility`               | WCAG 2.2; WAI-ARIA Authoring Practices; MDN                                                  | `notes/frontend-community-references.md`                     |   ⬜   |
+| `frontend/ui-review`                   | WCAG 2.2; Core Web Vitals; NN/g heuristics; community checklists as inspiration only         | `notes/frontend-community-references.md`                     |   ⬜   |
 | `database/sql`                         | DDIA; PostgreSQL docs                                                                        | `notes/database-transactions.md`                             |   ⬜   |
 | `database/postgresql`                  | PostgreSQL docs; Don't Do This wiki; Use The Index Luke                                      | `notes/database-indexing.md`                                 |   ⬜   |
 | `database/prisma`                      | Prisma docs                                                                                  | `notes/prisma-rules.md`                                      |   ⬜   |
