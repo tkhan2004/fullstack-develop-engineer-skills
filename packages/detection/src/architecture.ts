@@ -48,6 +48,8 @@ export interface ArchitectureDetection {
   readonly findings: readonly Finding[];
   /** Top-level directories under the source root, for describing a custom structure. */
   readonly topLevel: readonly { readonly path: string; readonly files: number }[];
+  /** Feature modules found under `modules/` or `features/`, with real paths. */
+  readonly modules: readonly { readonly name: string; readonly path: string }[];
 }
 
 /** The directory holding application source: `src`, or `app`/`lib`/`server` with enough files. */
@@ -235,6 +237,17 @@ export function detectArchitecture(
     .map(([path, files]) => ({ path: `${sourceRoot}/${path}`, files }))
     .sort((a, b) => a.path.localeCompare(b.path));
 
+  const modules = ["modules", "features"].flatMap((container) => {
+    const names = new Set<string>();
+    for (const p of allPaths) {
+      const [, dir, name, rest] = p.split("/");
+      if (dir === container && name && rest !== undefined) names.add(name);
+    }
+    return [...names]
+      .sort()
+      .map((name) => ({ name, path: fromSrcPath(`src/${container}/${name}`, sourceRoot) }));
+  });
+
   // Every candidate gets confidence the same way: its score minus half the strongest
   // competitor's, where a style and its refinement do not compete.
   const confidenceOf = (candidate: StyleScore) => {
@@ -288,6 +301,7 @@ export function detectArchitecture(
       scores,
       findings,
       topLevel,
+      modules,
     };
   }
 
@@ -318,6 +332,7 @@ export function detectArchitecture(
     scores,
     findings,
     topLevel,
+    modules,
   };
 }
 

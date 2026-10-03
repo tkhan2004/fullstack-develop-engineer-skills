@@ -173,3 +173,34 @@ describe("marker alternatives", () => {
     expect(result?.best?.vocabulary).toBe(1);
   });
 });
+
+describe("module discovery", () => {
+  it("lists feature modules under modules/ with real paths", async () => {
+    const result = await detect("ambiguous-mixed");
+    expect(result?.modules).toEqual([
+      { name: "billing", path: "src/modules/billing" },
+      { name: "reports", path: "src/modules/reports" },
+    ]);
+  });
+
+  it("finds features/ too, remaps non-src roots, and reports none when there is no container", () => {
+    const features = detectArchitecture(
+      createSnapshot({ "src/features/cart/a.ts": "", "src/features/auth/b.ts": "" }),
+      manifests,
+    );
+    expect(features?.modules.map((m) => m.name)).toEqual(["auth", "cart"]);
+    const server = detectArchitecture(
+      createSnapshot({
+        "server/modules/x/a.ts": "",
+        "server/b.ts": "",
+        "server/c.ts": "",
+        "server/d.ts": "",
+      }),
+      manifests,
+    );
+    expect(server?.modules).toEqual([{ name: "x", path: "server/modules/x" }]);
+    expect(detectArchitecture(createSnapshot({ "src/a/b.ts": "" }), manifests)?.modules).toEqual(
+      [],
+    );
+  });
+});

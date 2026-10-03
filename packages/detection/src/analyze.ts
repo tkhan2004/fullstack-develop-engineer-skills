@@ -108,7 +108,13 @@ function architectureSection(a: ArchitectureDetection | undefined): Profile["arc
         ? { conformance: Math.round(a.conformance * 100) / 100 }
         : {}),
       ...(a.style === "custom"
-        ? { structure: { root: a.sourceRoot, directories: a.topLevel.map((t) => ({ ...t })) } }
+        ? {
+            structure: {
+              root: a.sourceRoot,
+              directories: a.topLevel.map((t) => ({ ...t })),
+              ...(a.modules.length > 0 ? { modules: a.modules.map((m) => ({ ...m })) } : {}),
+            },
+          }
         : {}),
     },
   };

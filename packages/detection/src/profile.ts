@@ -78,6 +78,9 @@ export const profileSchema = z
                 directories: z.array(
                   z.object({ path: z.string(), files: z.number().int() }).strict(),
                 ),
+                modules: z
+                  .array(z.object({ name: z.string(), path: z.string() }).strict())
+                  .optional(),
               })
               .strict()
               .optional(),

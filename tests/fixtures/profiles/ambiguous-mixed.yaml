@@ -103,6 +103,11 @@ architecture:
           files: 1
         - path: src/utils
           files: 1
+      modules:
+        - name: billing
+          path: src/modules/billing
+        - name: reports
+          path: src/modules/reports
 conventions:
   naming:
     variables:
