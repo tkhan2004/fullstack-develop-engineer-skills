@@ -17,6 +17,7 @@
     "build": "tsup"
   },
   "devDependencies": {
+    "@clack/prompts": "^1.8.1",
     "@engineering-skills/architecture-engine": "workspace:*",
     "@engineering-skills/config": "workspace:*",
     "@engineering-skills/core": "workspace:*",
