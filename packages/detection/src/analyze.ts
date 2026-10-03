@@ -107,15 +107,12 @@ function architectureSection(a: ArchitectureDetection | undefined): Profile["arc
       ...(a.style !== "custom" && a.conformance !== undefined
         ? { conformance: Math.round(a.conformance * 100) / 100 }
         : {}),
-      ...(a.style === "custom"
-        ? {
-            structure: {
-              root: a.sourceRoot,
-              directories: a.topLevel.map((t) => ({ ...t })),
-              ...(a.modules.length > 0 ? { modules: a.modules.map((m) => ({ ...m })) } : {}),
-            },
-          }
-        : {}),
+      // Always recorded: if the user rejects the detected style, `custom` still has a structure to describe.
+      structure: {
+        root: a.sourceRoot,
+        directories: a.topLevel.map((t) => ({ ...t })),
+        ...(a.modules.length > 0 ? { modules: a.modules.map((m) => ({ ...m })) } : {}),
+      },
     },
   };
 }

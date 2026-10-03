@@ -161,8 +161,9 @@ The profile never overrides config. When they disagree, `doctor` reports the dri
 ## 5. Notes from the implementation
 
 - A convention below 65% carries `consistent: false`; the value is still the majority.
-- `architecture.backend.structure` appears only for `value: custom` and lists top-level directories
-  with file counts; `conformance` appears only for a named style.
+- `architecture.backend.structure` is always recorded (top-level directories with file counts, and
+  discovered modules), so `custom` can describe the project even when the user rejects a detected
+  style; `conformance` appears only for a named style.
 - For `value: custom`, `confidence` means "how sure we are that no named style fits"
   (`1 − confidence of the closest style`, capped at 0.95).
 - `alternatives[].confidence` uses the same formula as the winner, so the numbers are comparable.

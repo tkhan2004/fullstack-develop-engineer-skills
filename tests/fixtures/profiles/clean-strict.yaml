@@ -92,6 +92,19 @@ architecture:
         detail: 93% role-naming and marker-file match
         weight: 0.19
     conformance: 1
+    structure:
+      root: src
+      directories:
+        - path: src/application
+          files: 6
+        - path: src/config
+          files: 1
+        - path: src/domain
+          files: 5
+        - path: src/infrastructure
+          files: 2
+        - path: src/presentation
+          files: 3
 conventions:
   naming:
     variables:

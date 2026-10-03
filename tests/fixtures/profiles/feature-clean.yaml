@@ -89,6 +89,20 @@ architecture:
       - value: feature
         confidence: 0.86
     conformance: 1
+    structure:
+      root: src
+      directories:
+        - path: src/config
+          files: 1
+        - path: src/modules
+          files: 19
+        - path: src/shared
+          files: 1
+      modules:
+        - name: orders
+          path: src/modules/orders
+        - name: users
+          path: src/modules/users
 conventions:
   naming:
     variables:

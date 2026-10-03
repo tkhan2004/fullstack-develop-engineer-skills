@@ -83,6 +83,24 @@ architecture:
         detail: 100% role-naming and marker-file match
         weight: 0.2
     conformance: 1
+    structure:
+      root: src
+      directories:
+        - path: src/config
+          files: 1
+        - path: src/infrastructure
+          files: 1
+        - path: src/modules
+          files: 21
+        - path: src/shared
+          files: 1
+      modules:
+        - name: auth
+          path: src/modules/auth
+        - name: orders
+          path: src/modules/orders
+        - name: users
+          path: src/modules/users
 conventions:
   naming:
     classes:

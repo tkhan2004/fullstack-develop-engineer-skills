@@ -119,6 +119,9 @@ describe("profile properties", () => {
   it("describes the expected architecture and neutral observations for the violations fixture", async () => {
     const { profile } = await analyse(fixturePath("express-layered-violations"));
     expect(profile.architecture?.backend.value).toBe("layered");
+    expect(profile.architecture?.backend.structure?.directories.map((d) => d.path)).toContain(
+      "src/controllers",
+    );
     expect(profile.observations.map((o) => o.id)).toEqual(
       expect.arrayContaining([
         "dependency-rule-violations",
