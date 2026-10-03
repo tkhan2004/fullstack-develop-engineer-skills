@@ -51,15 +51,24 @@ confirm
 write
 ```
 
-| Flag                | Meaning                                                                   |
-| ------------------- | ------------------------------------------------------------------------- |
-| `--yes`, `-y`       | Non-interactive; accept detected values with confidence ≥ 0.85, else fail |
-| `--preset <name>`   | Start from a preset; other flags override it                              |
-| `--dry-run`         | Print every planned write, change nothing                                 |
-| `--force`           | Overwrite existing generated files (never source files)                   |
-| `--no-structure`    | Skip directory generation on a new project                                |
-| `--adapters <list>` | Comma-separated adapter ids                                               |
-| `--out <dir>`       | Alternative output root (default `.engineering`)                          |
+| Flag                                                         | Meaning                                                                                                         |
+| ------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------- |
+| `--yes`, `-y`                                                | Non-interactive. Accepts a detected architecture only at ≥ 0.85; otherwise **exits 3** (never guesses)          |
+| `--architecture <style\|custom>`                             | Explicit choice; always wins over detection. The non-interactive way past a low-confidence detection            |
+| `--mode`, `--strategy`, `--strictness`                       | Skip the matching question                                                                                      |
+| `--migrate-to`, `--migration`                                | Target architecture and strategy for `--strategy migrate` (records a planned migration only)                    |
+| `--language --backend --frontend --database --orm --testing` | Stack answers                                                                                                   |
+| `--preset <name>`                                            | Initial answers; with `--yes` it needs no questions (an architecture must still come from the preset or a flag) |
+| `--modules <list>`                                           | Feature modules to scaffold for module-oriented architectures                                                   |
+| `--dry-run`                                                  | Print the plan, write nothing                                                                                   |
+| `--force`                                                    | Replace an existing configuration (never source files)                                                          |
+| `--no-structure`                                             | Skip directory generation on a new project                                                                      |
+| `--adapters <list>`                                          | Comma-separated adapter ids                                                                                     |
+| `--out <dir>`, `--cwd <dir>`                                 | Configuration directory (default `.engineering`) and project directory                                          |
+
+Exit codes for `init`: `0` done, nothing to do, declined, or dry run · `2` invalid arguments or
+configuration, or no terminal and no `--yes` · `3` `--yes` cannot proceed without guessing, or a
+required value (language, architecture) could not be detected · `130` cancelled.
 
 Rules:
 
@@ -67,7 +76,11 @@ Rules:
 - MUST NOT overwrite a non-generated file. Generated files carry a header marker.
 - MUST NOT touch files outside `.engineering/`, the configured adapter outputs, and (new
   projects only, confirmed) the source tree.
-- Re-running `init` on a configured project offers: keep / review / reconfigure.
+- Re-running `init` on a configured project offers keep / review / reconfigure. With `--yes` it is a
+  no-op that points at `--force`; an invalid configuration is reported, never silently replaced.
+- The analysis report is shown **before** any question about the architecture or strategy.
+- Practices have no flag yet; non-interactively the defaults apply.
+- Skill resolution and AI instruction files are not part of `init` yet; they arrive with `generate` (P8).
 
 ## 3. `analyze`
 

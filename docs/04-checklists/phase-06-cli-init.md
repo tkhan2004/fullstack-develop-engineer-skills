@@ -5,61 +5,72 @@ Spec: [cli-spec.md](../02-specs/cli-spec.md)
 
 ## Framework
 
-- [ ] Command parser (commander/clipanion/cac — pick one, document why in an ADR)
-- [ ] `--help` for every command with examples
-- [ ] `--version`
+- [x] Command parser (commander/clipanion/cac — pick one, document why in an ADR)
+- [x] `--help` for every command with examples
+- [x] `--version`
 - [ ] Global flags: `--cwd`, `--no-color`, `--json`, `--verbose`
-- [ ] `NO_COLOR` and non-TTY handling (no spinners, no ANSI)
-- [ ] Ctrl-C → exit 130, no partial writes
+- [x] `NO_COLOR` and non-TTY handling (no spinners, no ANSI)
+- [x] Ctrl-C → exit 130, no partial writes
 
 ## Mode detection
 
-- [ ] Evidence-based pre-selection (empty dir → new; otherwise existing)
-- [ ] Warn when `new` is chosen in a non-empty directory
-- [ ] `--mode` flag override
+- [x] Evidence-based pre-selection (empty dir → new; otherwise existing)
+- [x] Warn when `new` is chosen in a non-empty directory
+- [x] `--mode` flag override
 
 ## New-project flow
 
-- [ ] Stack prompts (language, backend, frontend, database, ORM, tests)
-- [ ] Architecture prompt showing trade-offs inline
-- [ ] Strictness prompt with per-level descriptions
-- [ ] Practices multi-select with sensible defaults
-- [ ] Adapter selection
-- [ ] Structure-generation confirmation (`--no-structure` to skip)
+- [x] Stack prompts (language, backend, frontend, database, ORM, tests)
+- [x] Architecture prompt showing trade-offs inline
+- [x] Strictness prompt with per-level descriptions
+- [x] Practices multi-select with sensible defaults
+- [x] Adapter selection
+- [x] Structure-generation confirmation (`--no-structure` to skip)
 
 ## Existing-project flow
 
-- [ ] Reuse a fresh profile; re-analyse if stale or missing
-- [ ] **Render the analysis report before any question about strategy**
-- [ ] Strategy prompt with `adopt` pre-selected
-- [ ] Confidence-driven prompts: ≥0.85 confirm · 0.60–0.84 choose · <0.60 custom/manual
-- [ ] `migrate` sub-flow: target architecture + strategy, plan only
-- [ ] Strictness defaults to `observe` for `adopt`
+- [x] Reuse a fresh profile; re-analyse if stale or missing
+- [x] **Render the analysis report before any question about strategy**
+- [x] Strategy prompt with `adopt` pre-selected
+- [x] Confidence-driven prompts: ≥0.85 confirm · 0.60–0.84 choose · <0.60 custom/manual
+- [x] `migrate` sub-flow: target architecture + strategy, plan only
+- [x] Strictness defaults to `observe` for `adopt`
 
 ## Write safety
 
-- [ ] Write plan printed (create/update/skip per path) before any write
-- [ ] Confirmation required (skipped by `--yes`)
-- [ ] `--dry-run` writes nothing
-- [ ] Non-generated files never overwritten
-- [ ] Nothing written outside `.engineering/` + adapter outputs + (new, confirmed) source tree
-- [ ] Atomic-ish behaviour: on failure, no half-written config
+- [x] Write plan printed (create/update/skip per path) before any write
+- [x] Confirmation required (skipped by `--yes`)
+- [x] `--dry-run` writes nothing
+- [x] Non-generated files never overwritten
+- [x] Nothing written outside `.engineering/` + adapter outputs + (new, confirmed) source tree
+- [x] Atomic-ish behaviour: on failure, no half-written config
 
 ## Non-interactive
 
-- [ ] `--yes` accepts only confidence ≥ 0.85; otherwise fails with a clear message
+- [x] `--yes` accepts only confidence ≥ 0.85; otherwise fails with a clear message
 - [ ] All prompts have flags
-- [ ] `CI=true` does **not** imply `--yes`
+- [x] `CI=true` does **not** imply `--yes`
 
 ## Re-run behaviour
 
-- [ ] Existing config detected → keep / review / reconfigure
+- [x] Existing config detected → keep / review / reconfigure
 - [ ] Existing profile detected → use / review / regenerate
 
 ## Tests
 
-- [ ] E2E on `empty` fixture → full new-project output
-- [ ] E2E on `express-layered-clean` → adopt output, `git status` clean for source files
-- [ ] E2E on `ambiguous-mixed` with `--yes` → fails, explains why
+- [x] E2E on `empty` fixture → full new-project output
+- [x] E2E on `express-layered-clean` → adopt output, `git status` clean for source files
+- [x] E2E on `ambiguous-mixed` with `--yes` → fails, explains why
 - [ ] Prompt-flow snapshots
-- [ ] Exit codes per spec
+- [x] Exit codes per spec
+
+## Status notes
+
+- Not done: global `--no-color`/`--json`/`--verbose` (each command takes `--cwd`; `analyze` takes `--json`);
+  a flag for every prompt (practices have none); an explicit "review" choice for a stored profile
+  (the report is always shown, and the choice is use or re-analyse); prompt-flow _snapshots_ (flows
+  are asserted with a scripted prompter instead).
+- The terminal prompt implementation is verified by a pty run of the built binary and the CI smoke
+  test, not by unit tests.
+- `init` stops at configuration and structure. Skill resolution and instruction files are P7/P8.
+- Findings from running it: see git history for `feat(cli): add the init command`.

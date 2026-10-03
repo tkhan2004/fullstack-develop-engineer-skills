@@ -157,8 +157,10 @@ Each becomes a `doctor` diagnostic later; at `analyze` time it is information on
 | 0.60–0.84  | Ranked choices, user must pick     | `source: confirmed`          |
 | < 0.60     | Fallback to `custom`, offer manual | `source: manual` or `custom` |
 
-Non-interactive runs (`--yes`) MUST accept only ≥ 0.85 claims and MUST fall back to `custom`
-otherwise. They MUST NOT guess.
+Non-interactive runs (`--yes`) MUST accept only ≥ 0.85 claims. Below that they MUST NOT guess and
+MUST NOT silently fall back to `custom`: they exit 3 and list the explicit options
+(`--architecture <style>` or `--architecture custom`). Choosing `custom` is a decision the user makes,
+not a default the tool picks. (An earlier draft said "fall back to custom"; see ADR-0006.)
 
 ## 5. Output
 

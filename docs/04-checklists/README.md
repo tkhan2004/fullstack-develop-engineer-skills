@@ -12,7 +12,7 @@ Status: living document — update it as reality changes, not as intentions chan
 |  P3   | Skill engine          |   🟡   | [phase-03-skill-engine.md](phase-03-skill-engine.md)               |
 |  P4   | Architecture engine   |   🟡   | [phase-04-architecture-engine.md](phase-04-architecture-engine.md) |
 |  P5   | Detection engine      |   🟡   | [phase-05-detection-engine.md](phase-05-detection-engine.md)       |
-|  P6   | CLI `init`            |   ⬜   | [phase-06-cli-init.md](phase-06-cli-init.md)                       |
+|  P6   | CLI `init`            |   🟡   | [phase-06-cli-init.md](phase-06-cli-init.md)                       |
 |  P7   | AI adapters           |   ⬜   | [phase-07-ai-adapters.md](phase-07-ai-adapters.md)                 |
 |  P8   | Project generation    |   ⬜   | [phase-08-generation.md](phase-08-generation.md)                   |
 |  P9   | Doctor / review       |   ⬜   | [phase-09-doctor-review.md](phase-09-doctor-review.md)             |
