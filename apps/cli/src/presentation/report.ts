@@ -5,6 +5,8 @@ export interface ReportOptions {
   readonly color: boolean;
   /** Path the profile was written to, if it was. */
   readonly wrote?: string | undefined;
+  /** Print the closing "Generated"/"No files were written" line (default true). */
+  readonly footer?: boolean;
 }
 
 const RULE = "─".repeat(28);
@@ -124,7 +126,9 @@ export function renderReport(profile: Profile, options: ReportOptions): string {
     lines.push("", paint(1, "Reference modules"));
     for (const r of profile.reference_modules) lines.push(`  ${r.concern.padEnd(11)} ${r.path}`);
   }
-  if (options.wrote) lines.push("", `Generated: ${options.wrote}`);
-  else lines.push("", dim("No files were written."));
+  if (options.footer !== false) {
+    if (options.wrote) lines.push("", `Generated: ${options.wrote}`);
+    else lines.push("", dim("No files were written."));
+  }
   return `${lines.join("\n")}\n`;
 }

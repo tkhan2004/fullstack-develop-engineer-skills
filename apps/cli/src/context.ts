@@ -1,3 +1,5 @@
+import type { Prompter } from "./application/prompter.js";
+
 export interface Context {
   readonly out: (text: string) => void;
   readonly err: (text: string) => void;
@@ -5,6 +7,8 @@ export interface Context {
   readonly cwd: string;
   /** Whether output may contain ANSI colour (TTY and NO_COLOR unset). */
   readonly color: boolean;
+  /** Terminal prompts. Undefined when not interactive (no TTY). */
+  readonly prompter?: Prompter;
   /** Overrides where architectures/presets/skills are read from (tests). */
   readonly dataDir?: string;
 }

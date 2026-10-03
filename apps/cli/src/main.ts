@@ -1,4 +1,5 @@
 import { runAnalyze } from "./commands/analyze.js";
+import { runInitCommand } from "./commands/init.js";
 import { VERSION, type Context } from "./context.js";
 
 export { VERSION };
@@ -9,6 +10,7 @@ const USAGE = `eng-skills ${VERSION}
 Usage: eng-skills <command> [options]
 
 Commands:
+  init       Configure a project: new (choose an architecture) or existing (adopt what is there)
   analyze    Analyse an existing repository (read-only) and write its project profile
 
 More commands arrive phase by phase (see docs/03-plan/roadmap.md).
@@ -21,6 +23,7 @@ Options:
 const COMMANDS: Readonly<
   Record<string, (argv: readonly string[], ctx: Context) => Promise<number>>
 > = {
+  init: runInitCommand,
   analyze: runAnalyze,
 };
 
