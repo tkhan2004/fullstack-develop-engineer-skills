@@ -138,6 +138,20 @@ Legend for _Access_: 📕 book (buy/borrow, store in `raw/`) · 🌐 free online
 |  P2  | **Kent C. Dodds — state colocation, composition** | Kent C. Dodds         |   🌐   | Component-boundary and state-placement rules.                                            |
 |  P3  | **Web Vitals**                                    | Google                |   🌐   | Performance targets for frontend rules.                                                  |
 
+### 9b. Accessibility, UX and performance of the interface (proposed, see note)
+
+→ `frontend/accessibility`, `frontend/ui-review` (proposed; not yet in V1 scope)
+
+| Tier | Source                                            | Author / Org         | Access | Why                                                                                                                                                                                           |
+| :--: | ------------------------------------------------- | -------------------- | :----: | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|  P1  | **WCAG 2.2** (and the _Understanding_ documents)  | W3C WAI              |   🌐   | The authority for every objective accessibility rule: contrast, keyboard, focus, target size (2.5.8 AA = 24 px; 2.5.5 AAA = 44 px), reflow.                                                   |
+|  P1  | **WAI-ARIA Authoring Practices Guide**            | W3C WAI              |   🌐   | Correct patterns and keyboard behaviour for widgets; prevents "ARIA everywhere".                                                                                                              |
+|  P1  | **Core Web Vitals**                               | web.dev (Google)     |   🌐   | Thresholds and measurement for LCP, INP, CLS. Versioned: re-check on each release.                                                                                                            |
+|  P2  | **MDN Web Docs** (CSS, ARIA, media queries)       | Mozilla              |   🌐   | Reference for `prefers-reduced-motion`, viewport, compositor-friendly animation.                                                                                                              |
+|  P2  | **10 Usability Heuristics**                       | Nielsen Norman Group |   🌐   | Widely cited UX heuristics; use as review prompts, not as hard rules.                                                                                                                         |
+|  P3  | **UI UX Pro Max Skill** (`nextlevelbuilder`, MIT) | community            |   🌐   | Useful map of check categories ranked by consequence. Unauditable data sets; **not a source of truth**. See [notes/frontend-community-references.md](notes/frontend-community-references.md). |
+|  P3  | **Taste Skill** (`Leonxlnx`, MIT)                 | community            |   🌐   | Useful "state the design read first" step and a failable pre-flight checklist. Stack- and taste-specific; **not a source of truth**. Same note.                                               |
+
 ## 10. Error handling, resilience, debugging
 
 → `engineering/error-handling`, `engineering/debugging`, `core/problem-solving`
