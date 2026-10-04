@@ -106,12 +106,14 @@ export interface UpsertResult {
 
 /**
  * Put `content` in a managed block. Everything outside the block is preserved byte for byte.
- * A block edited by hand is a conflict: the text is returned unchanged for the caller to resolve.
+ * A block edited by hand is a conflict: the text is returned unchanged for the caller to resolve,
+ * unless `force` says to replace it.
  */
 export function upsertManagedBlock(
   existing: string | undefined,
   id: string,
   content: string,
+  options: { readonly force?: boolean } = {},
 ): UpsertResult {
   const body = normalize(content);
   const block = `${start(id, sha256(body))}\n${body}${end(id)}\n`;
@@ -120,7 +122,7 @@ export function upsertManagedBlock(
 
   const found = findManagedBlock(existing, id);
   if (found) {
-    if (found.edited) return { text: existing, status: "conflict" };
+    if (found.edited && !options.force) return { text: existing, status: "conflict" };
     if (found.content === body) return { text: existing, status: "unchanged" };
     return {
       text: existing.slice(0, found.from) + block + existing.slice(found.to),

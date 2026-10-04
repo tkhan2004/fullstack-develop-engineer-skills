@@ -101,6 +101,18 @@ describe("managed blocks", () => {
     });
   });
 
+  it("replaces an edited block in place when forced, keeping the text around it", () => {
+    const edited = `before\n${block("original").replace("original", "hand edited")}after\n`;
+    const forced = upsertManagedBlock(edited, "es", "regenerated", { force: true });
+    expect(forced.status).toBe("updated");
+    expect(forced.text.startsWith("before\n")).toBe(true);
+    expect(forced.text.endsWith("after\n")).toBe(true);
+    expect(findManagedBlock(forced.text, "es")).toMatchObject({
+      content: "regenerated\n",
+      edited: false,
+    });
+  });
+
   it("keeps separate blocks independent", () => {
     const both = upsertManagedBlock(block("one"), "other", "two").text;
     expect(upsertManagedBlock(both, "es", "one!").status).toBe("updated");
