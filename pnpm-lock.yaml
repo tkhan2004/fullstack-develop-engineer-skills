@@ -127,6 +127,9 @@ importers:
       '@engineering-skills/skill-engine':
         specifier: workspace:*
         version: link:../skill-engine
+      yaml:
+        specifier: ^2.6.1
+        version: 2.9.1
 
   packages/skill-engine:
     dependencies:

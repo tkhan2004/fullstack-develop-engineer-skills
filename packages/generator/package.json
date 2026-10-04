@@ -13,6 +13,7 @@
     "@engineering-skills/config": "workspace:*",
     "@engineering-skills/core": "workspace:*",
     "@engineering-skills/detection": "workspace:*",
-    "@engineering-skills/skill-engine": "workspace:*"
+    "@engineering-skills/skill-engine": "workspace:*",
+    "yaml": "^2.6.1"
   }
 }
