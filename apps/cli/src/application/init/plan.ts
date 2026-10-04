@@ -1,6 +1,7 @@
-import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
-import { dirname, join } from "node:path";
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 import { applyStructure, type StructurePlan } from "@engineering-skills/architecture-engine";
+import { writeAtomically } from "../../infrastructure/project-fs.js";
 
 export type FileAction = "create" | "update" | "unchanged";
 
@@ -82,14 +83,6 @@ export function renderPlan(plan: WritePlan): string {
   }
   lines.push("", "No source file is modified.");
   return `${lines.join("\n")}\n`;
-}
-
-/** Write a file via a temporary sibling so a failure never leaves a half-written config. */
-async function writeAtomically(path: string, content: string): Promise<void> {
-  await mkdir(dirname(path), { recursive: true });
-  const temp = `${path}.tmp-${process.pid}`;
-  await writeFile(temp, content, "utf8");
-  await rename(temp, path);
 }
 
 export async function applyWritePlan(
