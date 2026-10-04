@@ -6,7 +6,7 @@ here, and that every row names at least one note.
 | Skill                                  | Primary sources                                                                              | Notes                                                        | Status |
 | -------------------------------------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------ | :----: |
 | `core/engineering-principles`          | A Philosophy of Software Design; The Pragmatic Programmer; Software Engineering at Google    | `notes/principles-complexity.md`                             |   ⬜   |
-| `core/project-onboarding`              | Working Effectively with Legacy Code; Software Engineering at Google; own detection design   | `notes/onboarding-reading-a-codebase.md`                     |   ⬜   |
+| `core/project-onboarding`              | Working Effectively with Legacy Code; Software Engineering at Google; own detection design   | `notes/onboarding-reading-a-codebase.md`                     |   🟡   |
 | `core/requirements-analysis`           | Specification by Example; Writing Effective Use Cases                                        | `notes/requirements-clarification.md`                        |   ⬜   |
 | `core/problem-solving`                 | Debugging (Agans); Why Programs Fail                                                         | `notes/debugging-method.md`                                  |   ⬜   |
 | `core/decision-making`                 | Fundamentals of Software Architecture (trade-offs); The Pragmatic Programmer                 | `notes/decision-tradeoffs.md`                                |   ⬜   |
@@ -36,3 +36,16 @@ here, and that every row names at least one note.
 | `engineering/debugging`                | Debugging (Agans); Why Programs Fail                                                         | `notes/debugging-method.md`                                  |   ⬜   |
 
 Status: ⬜ not started · 🟡 notes in progress · ✅ skill written and traced
+
+## Source ids
+
+`skill.yaml` → `sources[].sot` must be one of these ids. CI checks it. Add the row here before
+citing a new source.
+
+| Id                                            | Source                                               | Licence                  |
+| --------------------------------------------- | ---------------------------------------------------- | ------------------------ |
+| `books/working-effectively-with-legacy-code`  | Working Effectively with Legacy Code — M. Feathers   | copyrighted — notes only |
+| `books/software-engineering-at-google`        | Software Engineering at Google — Winters et al.      | free HTML — notes only   |
+| `standards/google-eng-practices`              | Google Engineering Practices (code review guide)     | CC BY 3.0                |
+| `articles/documenting-architecture-decisions` | Documenting Architecture Decisions — M. Nygard, 2011 | article — notes only     |
+| `articles/strangler-fig-application`          | StranglerFigApplication — M. Fowler                  | article — notes only     |
