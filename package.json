@@ -19,7 +19,7 @@
     "format:check": "prettier --check .",
     "check:deps": "depcruise packages apps --config .dependency-cruiser.cjs",
     "clean": "pnpm -r exec rm -rf dist && rm -rf coverage",
-    "smoke": "node apps/cli/dist/cli.js analyze --no-write --deterministic --cwd tests/fixtures/repos/clean-strict > /dev/null && node apps/cli/dist/cli.js init --yes --dry-run --cwd tests/fixtures/repos/clean-strict"
+    "smoke": "bash scripts/smoke.sh"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
