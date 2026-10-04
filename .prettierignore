@@ -3,3 +3,4 @@ coverage
 pnpm-lock.yaml
 tests/fixtures
 docs/sot/raw
+**/__snapshots__

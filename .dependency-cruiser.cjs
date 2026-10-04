@@ -9,6 +9,14 @@ module.exports = {
       to: { path: "^(packages/(?!core)|apps/)" },
     },
     {
+      // Adapters know only the canonical output. One that reads config, the profile or the skill
+      // engine would couple the core to a specific AI tool's needs.
+      name: "adapters-know-only-the-canonical-output",
+      severity: "error",
+      from: { path: "^packages/adapters/src" },
+      to: { path: "^packages/(?!adapters|core)" },
+    },
+    {
       name: "packages-do-not-import-apps",
       severity: "error",
       from: { path: "^packages/" },
