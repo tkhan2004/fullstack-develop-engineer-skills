@@ -19,6 +19,15 @@
     },
     {
       "path": "../../packages/detection"
+    },
+    {
+      "path": "../../packages/adapters"
+    },
+    {
+      "path": "../../packages/generator"
+    },
+    {
+      "path": "../../packages/skill-engine"
     }
   ]
 }

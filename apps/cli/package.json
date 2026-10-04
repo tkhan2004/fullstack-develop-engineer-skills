@@ -18,9 +18,12 @@
   },
   "devDependencies": {
     "@clack/prompts": "^1.8.1",
+    "@engineering-skills/adapters": "workspace:*",
     "@engineering-skills/architecture-engine": "workspace:*",
     "@engineering-skills/config": "workspace:*",
     "@engineering-skills/core": "workspace:*",
-    "@engineering-skills/detection": "workspace:*"
+    "@engineering-skills/detection": "workspace:*",
+    "@engineering-skills/generator": "workspace:*",
+    "@engineering-skills/skill-engine": "workspace:*"
   }
 }

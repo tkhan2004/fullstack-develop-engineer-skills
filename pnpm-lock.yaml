@@ -44,6 +44,9 @@ importers:
       '@clack/prompts':
         specifier: ^1.8.1
         version: 1.8.1
+      '@engineering-skills/adapters':
+        specifier: workspace:*
+        version: link:../../packages/adapters
       '@engineering-skills/architecture-engine':
         specifier: workspace:*
         version: link:../../packages/architecture-engine
@@ -56,6 +59,12 @@ importers:
       '@engineering-skills/detection':
         specifier: workspace:*
         version: link:../../packages/detection
+      '@engineering-skills/generator':
+        specifier: workspace:*
+        version: link:../../packages/generator
+      '@engineering-skills/skill-engine':
+        specifier: workspace:*
+        version: link:../../packages/skill-engine
 
   packages/adapters:
     dependencies:

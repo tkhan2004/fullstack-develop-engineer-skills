@@ -1,4 +1,5 @@
 import { runAnalyze } from "./commands/analyze.js";
+import { runGenerate } from "./commands/generate.js";
 import { runInitCommand } from "./commands/init.js";
 import { VERSION, type Context } from "./context.js";
 
@@ -12,6 +13,7 @@ Usage: eng-skills <command> [options]
 Commands:
   init       Configure a project: new (choose an architecture) or existing (adopt what is there)
   analyze    Analyse an existing repository (read-only) and write its project profile
+  generate   Generate instruction files for your AI tools from the configuration
 
 More commands arrive phase by phase (see docs/03-plan/roadmap.md).
 
@@ -25,6 +27,7 @@ const COMMANDS: Readonly<
 > = {
   init: runInitCommand,
   analyze: runAnalyze,
+  generate: runGenerate,
 };
 
 /** Entry point with injected I/O so behaviour is testable without spawning a process. */

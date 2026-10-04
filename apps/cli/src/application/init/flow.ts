@@ -718,7 +718,7 @@ async function execute(options: InitOptions, deps: InitDeps): Promise<number> {
     `\n✔ Wrote ${written.length} item${written.length === 1 ? "" : "s"}:\n${written.map((w) => `    ${w}`).join("\n")}\n`,
   );
   out(
-    "\nNext: review the configuration. AI instruction files arrive with `eng-skills generate` (not available yet).\n",
+    "\nNext: review the configuration, then run `eng-skills generate` to create the instruction files for your AI tools.\n",
   );
   return 0;
 }
