@@ -153,7 +153,7 @@ The profile never overrides config. When they disagree, `doctor` reports the dri
 | Consumer       | Uses                                                           |
 | -------------- | -------------------------------------------------------------- |
 | `init`         | Pre-fills answers; proposes `adopt`                            |
-| Skill resolver | `conventions`, `reference_modules` → project-conventions skill |
+| Skill resolver | `conventions`, `reference_modules` → project/conventions skill |
 | Generators     | Project context block in agent instructions                    |
 | `doctor`       | Baseline for drift and for `observations` → diagnostics        |
 | `migrate`      | Module inventory and ordering input                            |

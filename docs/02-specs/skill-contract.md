@@ -27,7 +27,7 @@ summary: >
   Actionable naming, function, and module rules; how to decide when an abstraction
   is justified.
 
-category: quality # core|architecture|quality|backend|frontend|database|engineering
+category: quality # core|architecture|quality|backend|frontend|database|engineering|project
 priority: 40 # lower = earlier in generated output
 
 applies_to: # omitted = always on

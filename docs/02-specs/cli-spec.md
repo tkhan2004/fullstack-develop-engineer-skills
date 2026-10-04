@@ -80,7 +80,7 @@ Rules:
   no-op that points at `--force`; an invalid configuration is reported, never silently replaced.
 - The analysis report is shown **before** any question about the architecture or strategy.
 - Practices have no flag yet; non-interactively the defaults apply.
-- Skill resolution and AI instruction files are not part of `init` yet; they arrive with `generate` (P8).
+- `init` configures; `generate` writes the instruction files.
 
 ## 3. `analyze`
 
@@ -109,15 +109,31 @@ eng-skills list presets
 
 ## 5. `generate`
 
-Re-runs resolution and output from the existing config. Deterministic:
+Reads `.engineering/config.yaml` and the project profile, resolves the skills, and writes the
+instruction files for the configured AI tools plus a lockfile. Deterministic:
 `generate && generate` leaves a clean `git status`.
 
 ```bash
-eng-skills generate [--check] [--adapters claude] [--dry-run]
+eng-skills generate [--check] [--dry-run] [--force] [--adapters claude,generic] [--out <dir>] [--cwd <dir>]
 ```
 
-`--check` writes nothing and exits `1` if output would differ — the CI guard against
-committed-but-stale instructions.
+| Flag                | Meaning                                                                                                 |
+| ------------------- | ------------------------------------------------------------------------------------------------------- |
+| `--check`           | Write nothing; exit `1` if any file would change. The CI guard against committed-but-stale instructions |
+| `--dry-run`         | Show the plan, write nothing                                                                            |
+| `--force`           | Replace hand-edited generated files and a hand-edited project skill                                     |
+| `--adapters <list>` | Only these adapters                                                                                     |
+
+Behaviour:
+
+- **All or nothing.** If any file would overwrite something the user wrote or edited, nothing is
+  written; the conflicts are listed and `--force` is the explicit way through (exit `1`).
+- `CLAUDE.md` and `AGENTS.md` belong to the team: only a managed block in them changes.
+- The project conventions skill is generated once for an existing project; a hand-edited copy is
+  kept and used, and regenerating it needs `--force`.
+- A missing or stale profile, an empty skill library or an over-budget skill set are warnings.
+- No configuration or an invalid one exits `2` with how to fix it; a skill graph that cannot be
+  resolved exits `3`.
 
 ## 6. `doctor`
 

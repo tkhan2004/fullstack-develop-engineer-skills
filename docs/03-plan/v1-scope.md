@@ -91,7 +91,7 @@ npx @engineering-skills/cli init   # → adopt
 - [ ] Generated instructions contain "Do not restructure the project" and list the actual
       directories of this repo
 - [ ] Strictness defaults to `observe`
-- [ ] A `project-conventions` skill is generated from the profile
+- [ ] A `project/conventions` skill is generated from the profile
 
 ### C. Ambiguous project
 

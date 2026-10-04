@@ -171,7 +171,7 @@ first and generic advice last.
 For existing projects the generator emits one extra, locally-owned skill:
 
 ```text
-.engineering/skills/project-conventions/SKILL.md
+.engineering/skills/conventions/SKILL.md
 ```
 
 Built from the project profile — observed naming, error handling, test placement, reference

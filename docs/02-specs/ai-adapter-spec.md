@@ -96,13 +96,16 @@ Rules:
 
 ### `claude`
 
-- `CLAUDE.md` — project context + the condensed rule set, project facts first.
-- Optionally `.claude/skills/<id>/SKILL.md` for large skill bodies, referenced from
-  `CLAUDE.md`, when `ai.mode: reference`.
+- `CLAUDE.md` — a **managed block** (the file belongs to the team): project facts, prohibitions,
+  structure, dependency rules, reference modules, and in `reference` mode an index of skills.
+- `reference` mode (default): each skill is `.claude/skills/eng-<category>-<name>/SKILL.md`, with the
+  front matter Claude Code needs **first** and the generated-file header after it. The `eng-` prefix
+  keeps these clear of the team's own skills.
+- `inline` mode: everything in the block.
 
 ### `codex`
 
-- `AGENTS.md`, single file, no external references (assume no file-following).
+- `AGENTS.md`, a managed block, always inline (no file-following is assumed).
 
 ### `cursor`
 
@@ -153,3 +156,20 @@ refinement.
 
 No core change. If one is needed, the IR is incomplete — extend the IR, not the adapter's
 reach.
+
+## 9. Notes from the implementation
+
+- The IR carries more than the first sketch: `structure` (real directories with what each is for),
+  `conventions` (only the consistent ones), `dependencyRules` (sentences, from the manifest or the
+  observed custom description), and `migration`. Adapters still read nothing else; dependency-cruiser
+  fails the build if an adapter imports config, detection or the skill engine.
+- **The hash covers everything except the header.** For a file with front matter that must come
+  first, the header is placed after it and the hash covers front matter plus body. Line-ending
+  conversion and stripped trailing whitespace are not edits.
+- **Managed blocks carry their own hash** in the start marker, so an edited block is a conflict, and
+  the team's text around it is preserved byte for byte.
+- **The architecture-awareness block is stated once**, in the project context, and removed from each
+  skill body; it is identical in every architecture-touching skill.
+- `renderAdapter` rejects an adapter that writes an undeclared path or the same path twice.
+- Skills are ordered by priority band: project 5–9, core 10–19, architecture 20–29, stack 30–49,
+  quality 50–59, engineering 60–69. Project facts always come first regardless.

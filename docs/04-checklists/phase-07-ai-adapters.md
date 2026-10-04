@@ -5,46 +5,56 @@ Spec: [ai-adapter-spec.md](../02-specs/ai-adapter-spec.md)
 
 ## Canonical IR
 
-- [ ] `CanonicalOutput` type in `packages/core`
-- [ ] Builder: `(config, profile, resolvedSkills) → CanonicalOutput`
-- [ ] Project context block: mode, architecture, strictness, constraints
-- [ ] Hard constraints list ("Do not restructure the project.", etc.)
-- [ ] Reference modules section from the profile
-- [ ] Section ordering per spec §6
-- [ ] Lockfile data (skill ids + versions + `selectedBy`)
-- [ ] IR snapshot tests
+- [x] `CanonicalOutput` type in `packages/core`
+- [x] Builder: `(config, profile, resolvedSkills) → CanonicalOutput`
+- [x] Project context block: mode, architecture, strictness, constraints
+- [x] Hard constraints list ("Do not restructure the project.", etc.)
+- [x] Reference modules section from the profile
+- [x] Section ordering per spec §6
+- [x] Lockfile data (skill ids + versions + `selectedBy`)
+- [x] IR snapshot tests
 
 ## Adapter interface
 
-- [ ] `AiAdapter` interface + registry
-- [ ] `defaultOutputs()` declared per adapter; writes outside it are rejected
-- [ ] Options: `mode: reference|inline`, output path overrides
+- [x] `AiAdapter` interface + registry
+- [x] `defaultOutputs()` declared per adapter; writes outside it are rejected
+- [x] Options: `mode: reference|inline`, output path overrides
 
 ## Adapters
 
-- [ ] `generic` → `.engineering/generated/INSTRUCTIONS.md` (self-contained)
-- [ ] `claude` → `CLAUDE.md` (+ `.claude/skills/<id>/SKILL.md` in reference mode)
-- [ ] `codex` → `AGENTS.md` (inline, no references)
+- [x] `generic` → `.engineering/generated/INSTRUCTIONS.md` (self-contained)
+- [x] `claude` → `CLAUDE.md` (+ `.claude/skills/<id>/SKILL.md` in reference mode)
+- [x] `codex` → `AGENTS.md` (inline, no references)
 - [ ] (stretch) `cursor` → `.cursor/rules/*.mdc` with glob frontmatter
 
 ## File discipline
 
-- [ ] Generated-file header with version, source, regenerate command, content hash
-- [ ] Managed-block markers for user-owned files
-- [ ] Content outside managed blocks preserved byte-for-byte
-- [ ] Hash mismatch → stop, show diff, require `--force`
-- [ ] LF endings, trailing newline, no trailing whitespace
+- [x] Generated-file header with version, source, regenerate command, content hash
+- [x] Managed-block markers for user-owned files
+- [x] Content outside managed blocks preserved byte-for-byte
+- [x] Hash mismatch → stop, show diff, require `--force`
+- [x] LF endings, trailing newline, no trailing whitespace
 
 ## Determinism
 
-- [ ] No timestamps in content
-- [ ] Stable ordering everywhere
-- [ ] Two consecutive generations → identical bytes
-- [ ] Snapshot tests per adapter on a fixture config
+- [x] No timestamps in content
+- [x] Stable ordering everywhere
+- [x] Two consecutive generations → identical bytes
+- [x] Snapshot tests per adapter on a fixture config
 
 ## Quality of output
 
-- [ ] First 500 tokens contain mode, architecture, strictness and the do-not list
-- [ ] Existing-project output names the repo's **actual** directories
-- [ ] No Claude/Codex-specific phrasing leaks into the IR or core
-- [ ] Total output size reported; warning past budget
+- [x] First 500 tokens contain mode, architecture, strictness and the do-not list
+- [x] Existing-project output names the repo's **actual** directories
+- [x] No Claude/Codex-specific phrasing leaks into the IR or core
+- [x] Total output size reported; warning past budget
+
+## Status notes
+
+- Packages: `packages/adapters` (file discipline, three adapters; knows only the canonical output) and
+  `packages/generator` (builds the canonical output). Cursor is not implemented.
+- The IR builder is covered by structured assertions rather than IR snapshots; adapters have file
+  snapshots under `packages/adapters/src/__snapshots__`.
+- "First 500 tokens" is asserted as the prohibition appearing within about 2000 characters.
+- `defaultOutputs()` became `outputPaths(output, options)` because the Claude skill files depend on
+  which skills resolved.
