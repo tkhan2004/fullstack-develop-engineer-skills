@@ -100,7 +100,7 @@ outside managed blocks preserved; ordering matches
 ## P8 — Project generation
 
 **Entry** P6, P7.
-**Deliverables** `.engineering/` layout, `generate` command, lockfile, project-conventions
+**Deliverables** `.engineering/` layout, `generate` command, lockfile, project/conventions
 skill generation from the profile, `--check`.
 **Exit** `generate && generate` → clean `git status`; `--check` fails on drift; lockfile
 records skill ids + versions; regenerating a user-edited project skill asks first.
