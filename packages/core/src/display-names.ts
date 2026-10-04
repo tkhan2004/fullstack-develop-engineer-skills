@@ -1,0 +1,48 @@
+/**
+ * Display names for detected and configured values, shared by the CLI and the adapters.
+ * Unknown values fall back to the raw value.
+ */
+const NAMES: Readonly<Record<string, string>> = {
+  typescript: "TypeScript",
+  javascript: "JavaScript",
+  node: "Node.js",
+  express: "Express",
+  nestjs: "NestJS",
+  fastify: "Fastify",
+  nextjs: "Next.js",
+  react: "React",
+  postgresql: "PostgreSQL",
+  mysql: "MySQL",
+  sqlite: "SQLite",
+  mongodb: "MongoDB",
+  prisma: "Prisma",
+  drizzle: "Drizzle",
+  typeorm: "TypeORM",
+  vitest: "Vitest",
+  jest: "Jest",
+  "node:test": "node:test",
+  pnpm: "pnpm",
+  npm: "npm",
+  yarn: "Yarn",
+  bun: "Bun",
+  layered: "Layered",
+  feature: "Feature-based",
+  clean: "Clean Architecture",
+  "feature-clean": "Feature + Clean Architecture",
+  hexagonal: "Hexagonal",
+  custom: "Custom (described from the repository)",
+  "custom-error-class": "custom error class",
+  "built-in-errors": "built-in errors",
+  "framework-exceptions": "framework exceptions",
+  "async-await": "async/await",
+  "promise-chains": "promise chains",
+  "dunder-tests": "__tests__ directories",
+  "separate-dir": "separate tests directory",
+  colocated: "colocated with source",
+  relative: "relative paths",
+  alias: "path aliases",
+  named: "named exports",
+  default: "default exports",
+};
+
+export const displayName = (value: string): string => NAMES[value] ?? value;
