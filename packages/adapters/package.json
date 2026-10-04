@@ -1,0 +1,13 @@
+{
+  "name": "@engineering-skills/adapters",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Render the canonical output for Claude, Codex and generic agents",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@engineering-skills/core": "workspace:*"
+  }
+}

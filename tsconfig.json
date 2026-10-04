@@ -6,6 +6,7 @@
     { "path": "packages/skill-engine" },
     { "path": "packages/architecture-engine" },
     { "path": "packages/detection" },
+    { "path": "packages/adapters" },
     { "path": "apps/cli" }
   ]
 }

@@ -57,6 +57,12 @@ importers:
         specifier: workspace:*
         version: link:../../packages/detection
 
+  packages/adapters:
+    dependencies:
+      '@engineering-skills/core':
+        specifier: workspace:*
+        version: link:../core
+
   packages/architecture-engine:
     dependencies:
       '@engineering-skills/core':
