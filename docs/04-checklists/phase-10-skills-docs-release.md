@@ -10,7 +10,7 @@ Use [skill-authoring-checklist.md](skill-authoring-checklist.md) per skill.
 ### core
 
 - [ ] `engineering-principles`
-- [ ] `project-onboarding` ← highest value; write first
+- [x] `project-onboarding` ← highest value; written first (v1.0.0, 1 of 28)
 - [ ] `requirements-analysis`
 - [ ] `problem-solving`
 - [ ] `decision-making`
@@ -52,7 +52,7 @@ Use [skill-authoring-checklist.md](skill-authoring-checklist.md) per skill.
 
 For at least 5 high-value skills, run a real agent task with and without the skill:
 
-- [ ] `project-onboarding` on an existing fixture repo
+- [x] `project-onboarding` on an existing fixture repo (one run per arm; see skill-evaluations.md)
 - [ ] `clean-code` on a deliberately messy module
 - [ ] `security` on an endpoint with an IDOR
 - [ ] `testing` on an untested business rule
