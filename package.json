@@ -19,7 +19,8 @@
     "format:check": "prettier --check .",
     "check:deps": "depcruise packages apps --config .dependency-cruiser.cjs",
     "clean": "pnpm -r exec rm -rf dist && rm -rf coverage",
-    "smoke": "bash scripts/smoke.sh"
+    "smoke": "bash scripts/smoke.sh",
+    "typecheck:skills": "tsc -p skills/tsconfig.json"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",

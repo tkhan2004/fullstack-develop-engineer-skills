@@ -1,0 +1,34 @@
+id: core/project-onboarding
+version: 1.0.0
+title: Project Onboarding
+summary: >
+  How to learn an existing repository before changing it, so new code matches how the project
+  already works instead of introducing a second convention.
+category: core
+priority: 10
+touches_structure: true
+
+applies_to:
+  project.mode: [existing]
+
+strictness_overrides:
+  observe: >
+    Change only what was asked. Mirror existing code even where you would write it differently, and
+    report problems you notice instead of fixing them.
+  strict: >
+    The Do and Don't lists are blocking: a diff that adds a second convention or an unrequested
+    dependency MUST be revised before it is delivered.
+
+sources:
+  - sot: books/working-effectively-with-legacy-code
+    topics: [change-algorithm, characterization-tests]
+  - sot: books/software-engineering-at-google
+    topics: [knowledge-sharing]
+  - sot: standards/google-eng-practices
+    topics: [consistency, code-health]
+  - sot: articles/documenting-architecture-decisions
+    topics: [decision-records]
+  - sot: articles/strangler-fig-application
+    topics: [incremental-migration]
+
+tokens_estimate: 1150

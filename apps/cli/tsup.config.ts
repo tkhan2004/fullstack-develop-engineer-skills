@@ -13,9 +13,9 @@ export default defineConfig({
   },
   // Single self-contained file so `npx @engineering-skills/cli` needs no workspace packages.
   noExternal: [/.*/],
-  // Framework data (architectures, presets) ships next to the bundle.
+  // Framework data (architectures, presets, skills) ships next to the bundle.
   onSuccess: async () => {
-    for (const dir of ["architectures", "presets"])
+    for (const dir of ["architectures", "presets", "skills"])
       cpSync(`../../${dir}`, `dist/data/${dir}`, { recursive: true });
   },
 });
