@@ -13,6 +13,7 @@ export const SIZE_CLASS: Record<SkillCategory, SizeClass> = {
   database: "technology",
   quality: "practice",
   engineering: "practice",
+  project: "practice",
 };
 
 /** `target` is a warning threshold; `cap` is a hard limit enforced in CI. */

@@ -31,6 +31,7 @@ describe("token limits", () => {
     expect(limitsFor("architecture")).toEqual({ target: 1500, cap: 2200 });
     expect(limitsFor("backend")).toEqual(limitsFor("database"));
     expect(limitsFor("quality")).toEqual({ target: 1000, cap: 1500 });
+    expect(limitsFor("project")).toEqual({ target: 1000, cap: 1500 });
   });
 });
 

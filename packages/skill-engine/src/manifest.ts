@@ -11,6 +11,8 @@ export const SKILL_CATEGORIES = [
   "frontend",
   "database",
   "engineering",
+  /** Skills generated for one project from its profile (`.engineering/skills`). */
+  "project",
 ] as const;
 export type SkillCategory = (typeof SKILL_CATEGORIES)[number];
 
