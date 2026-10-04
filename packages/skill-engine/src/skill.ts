@@ -1,8 +1,8 @@
 import { estimateTokens, parseSkillDocument, type SkillDocument } from "./document.js";
 import type { SkillManifest } from "./manifest.js";
 
-/** Where a skill came from: general skills, or an architecture definition directory. */
-export type SkillOrigin = "skills" | "architectures";
+/** Where a skill came from: general skills, an architecture definition, or this project's own `.engineering/skills`. */
+export type SkillOrigin = "skills" | "architectures" | "project";
 
 export interface Skill {
   readonly manifest: SkillManifest;
