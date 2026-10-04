@@ -107,6 +107,24 @@ importers:
         specifier: ^3.24.1
         version: 3.25.76
 
+  packages/generator:
+    dependencies:
+      '@engineering-skills/architecture-engine':
+        specifier: workspace:*
+        version: link:../architecture-engine
+      '@engineering-skills/config':
+        specifier: workspace:*
+        version: link:../config
+      '@engineering-skills/core':
+        specifier: workspace:*
+        version: link:../core
+      '@engineering-skills/detection':
+        specifier: workspace:*
+        version: link:../detection
+      '@engineering-skills/skill-engine':
+        specifier: workspace:*
+        version: link:../skill-engine
+
   packages/skill-engine:
     dependencies:
       '@engineering-skills/config':

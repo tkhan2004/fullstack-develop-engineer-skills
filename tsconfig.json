@@ -7,6 +7,7 @@
     { "path": "packages/architecture-engine" },
     { "path": "packages/detection" },
     { "path": "packages/adapters" },
+    { "path": "packages/generator" },
     { "path": "apps/cli" }
   ]
 }

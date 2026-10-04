@@ -1,0 +1,17 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+    "emitDeclarationOnly": true,
+    "types": ["node"]
+  },
+  "include": ["src"],
+  "references": [
+    { "path": "../core" },
+    { "path": "../config" },
+    { "path": "../architecture-engine" },
+    { "path": "../detection" },
+    { "path": "../skill-engine" }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "name": "@engineering-skills/generator",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Build the canonical output from configuration, profile and resolved skills",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@engineering-skills/architecture-engine": "workspace:*",
+    "@engineering-skills/config": "workspace:*",
+    "@engineering-skills/core": "workspace:*",
+    "@engineering-skills/detection": "workspace:*",
+    "@engineering-skills/skill-engine": "workspace:*"
+  }
+}
