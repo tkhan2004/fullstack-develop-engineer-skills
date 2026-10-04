@@ -109,6 +109,9 @@ importers:
 
   packages/generator:
     dependencies:
+      '@engineering-skills/adapters':
+        specifier: workspace:*
+        version: link:../adapters
       '@engineering-skills/architecture-engine':
         specifier: workspace:*
         version: link:../architecture-engine

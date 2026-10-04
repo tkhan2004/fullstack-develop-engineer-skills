@@ -8,6 +8,7 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
+    "@engineering-skills/adapters": "workspace:*",
     "@engineering-skills/architecture-engine": "workspace:*",
     "@engineering-skills/config": "workspace:*",
     "@engineering-skills/core": "workspace:*",
